@@ -1,0 +1,75 @@
+/* Colores basados en la imagen */
+  
+  /* Estilos generales del header */
+  .header {
+    font-family: 'Arial', sans-serif;
+    background-color: #d6c5ae;
+    padding: 10px 20px;
+  }
+  
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #9b7d5e;
+    color: white;
+    padding: 5px ;
+  }
+  
+  .contact-info {
+    font-size: 14px;
+  }
+  
+  .social-icons a {
+    color: white;
+    margin-left: 10px;
+    text-decoration: none;
+  }
+  
+  .header-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+  }
+  
+  .logo img {
+    width: 100px;
+    margin-right: 10px;
+  }
+  
+  .logo h1 {
+    display: inline;
+    font-size: 24px;
+    color: #4b2f25;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar input,
+  .search-bar select {
+    padding: 5px;
+    border: 1px #4b2f25;
+    border-radius: 4px;
+  }
+  
+  .search-bar button {
+    padding: 5px;
+    background-color: #4b2f25;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+  
+  .user-icons a {
+    margin-left: 15px;
+    color: #4b2f25;
+    font-size: 18px;
+    text-decoration: none;
+  }
+  

@@ -1,0 +1,81 @@
+<app-header></app-header>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Inicio</a>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Eventos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Productos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">¿Quiénes Somos?</a>
+            </li>
+          </ul>
+          <form class="d-flex" role="search">
+            <button class="btn btn-outline-success" type="submit" routerLink="/auth/login">Iniciar Sesión</button>
+            <button class="btn btn-outline-primary" type="submit">Registrarse</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  
+    <!-- Carousel para imágenes destacadas -->
+    <div id="carouselExampleIndicators" class="carousel slide my-4" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="path_to_your_image1.jpg" class="d-block w-100" alt="Artesanías">
+        </div>
+        <div class="carousel-item">
+          <img src="path_to_your_image2.jpg" class="d-block w-100" alt="Más artesanías">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  
+    <!-- Sección de productos más solicitados -->
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <img src="path_to_your_image3.jpg" class="card-img-top" alt="Producto">
+          <div class="card-body">
+            <h5 class="card-title">Producto 1</h5>
+            <p class="card-text">Descripción breve del producto.</p>
+            <a href="#" class="btn btn-primary">Ver más</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <img src="path_to_your_image4.jpg" class="card-img-top" alt="Producto">
+          <div class="card-body">
+            <h5 class="card-title">Producto 2</h5>
+            <p class="card-text">Descripción breve del producto.</p>
+            <a href="#" class="btn btn-primary">Ver más</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <img src="path_to_your_image5.jpg" class="card-img-top" alt="Producto">
+          <div class="card-body">
+            <h5 class="card-title">Producto 3</h5>
+            <p class="card-text">Descripción breve del producto.</p>
+            <a href="#" class="btn btn-primary">Ver más</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<app-footer></app-footer>

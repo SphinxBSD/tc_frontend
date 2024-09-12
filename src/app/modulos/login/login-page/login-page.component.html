@@ -1,0 +1,47 @@
+<app-header></app-header>
+
+<div class="container-fluid vh-100 d-flex align-items-center justify-content-center bg-light">
+    <div class="row w-75">
+      <!-- Columna de imagen -->
+      <div class="col-md-6 bg-white d-flex align-items-center justify-content-center">
+        <div class="img-placeholder text-center">
+          <img src="assets/images/logo1.png" alt="logo principal">
+        </div>
+      </div>
+  
+      <!-- Columna de formulario de login -->
+      <div class="col-md-6 bg-brown d-flex flex-column justify-content-center p-4">
+        <div class="text-center mb-4">
+          <img src="assets/images/logo2.png" alt="Logo" class="logo-img mb-3">
+          <h2 class="text-white">Bienvenido</h2>
+        </div>
+        <form (ngSubmit)="onLogin()">
+          <div class="form-group mb-3">
+            <input [(ngModel)]="username" name="useraname" type="username" class="form-control" placeholder="Nombre de usuario" required>
+          </div>
+          <div class="form-group mb-3 position-relative">
+            <input [(ngModel)]="password" name="password" type="password" class="form-control" placeholder="Contraseña" required>
+            <span class="position-absolute toggle-password" style="top: 25%; right: 10px; cursor: pointer;">
+              <i class="fa fa-eye"></i>
+            </span>
+          </div>
+          <div class="form-group mb-3 text-center">
+            <!-- Aquí puedes integrar reCAPTCHA -->
+            <div class="recaptcha-placeholder">[ reCAPTCHA ]</div>
+          </div>
+          <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+          <div class="form-group text-center">
+            <button type="submit" class="btn btn-dark btn-block">Iniciar Sesión</button>
+          </div>
+          <div class="text-center mt-2">
+            <a href="#" class="text-white">¿Haz olvidado la contraseña?</a>
+          </div>
+          <div class="text-center mt-3">
+            <button type="button" class="btn btn-outline-light">Crear Cuenta Nueva</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+<app-footer></app-footer>
