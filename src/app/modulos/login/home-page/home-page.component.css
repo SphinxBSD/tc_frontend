@@ -1,0 +1,33 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #F4EFE5;
+  }
+  
+  .navbar {
+    background-color: #6B3E26;
+  }
+  
+  .carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+  }
+  
+  h2 {
+    color: #6B3E26;
+  }
+  
+  .carousel-item img {
+    height: 500px;
+    object-fit: cover;
+  }
+  
+  section h2 {
+    color: #8B4513;
+    font-weight: bold;
+  }
+  
+  section .row img {
+    border: 2px solid #6B3E26;
+    margin-bottom: 15px;
+  }
+  
