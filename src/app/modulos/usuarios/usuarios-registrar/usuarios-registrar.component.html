@@ -1,0 +1,139 @@
+<app-header></app-header>
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="row w-100">
+      
+      <!-- Columna de la Imagen -->
+      <div class="col-md-6 d-none d-md-flex justify-content-center align-items-center">
+        <img src="assets/images/logo1.png" alt="Logo de la Empresa" class="img-fluid" style="max-height: 400px;">
+      </div>
+  
+      <!-- Columna del Formulario -->
+      <div class="col-md-6">
+        <div class="card shadow-sm" style="border-radius: 10px;">
+          <div class="card-body p-4">
+            <h4 class="text-center mb-4">Registro de Usuario</h4>
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  
+              <div class="row">
+                <!-- CI -->
+                <div class="col-md-6 mb-3">
+                  <input type="text" id="ci" formControlName="ci" class="form-control" placeholder="CI">
+                  <div *ngIf="hasError('ci', 'required')" class="text-danger small">
+                    El campo CI es requerido.
+                  </div>
+                </div>
+  
+                <!-- Fecha de Nacimiento -->
+                <div class="col-md-6 mb-3">
+                  <input type="date" id="fecha_nac" formControlName="fecha_nac" class="form-control">
+                  <div *ngIf="hasError('fecha_nac', 'required')" class="text-danger small">
+                    La fecha de nacimiento es requerida.
+                  </div>
+                </div>
+              </div>
+  
+              <div class="row">
+                <!-- Nombre -->
+                <div class="col-md-6 mb-3">
+                  <input type="text" id="nombre" formControlName="nombre" class="form-control" placeholder="Nombre">
+                  <div *ngIf="hasError('nombre', 'required')" class="text-danger small">
+                    El campo nombre es requerido.
+                  </div>
+                </div>
+  
+                <!-- Apellido Paterno -->
+                <div class="col-md-6 mb-3">
+                  <input type="text" id="paterno" formControlName="paterno" class="form-control" placeholder="Apellido Paterno">
+                  <div *ngIf="hasError('paterno', 'required')" class="text-danger small">
+                    El apellido paterno es requerido.
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Apellido Materno -->
+              <div class="mb-3">
+                <input type="text" id="materno" formControlName="materno" class="form-control" placeholder="Apellido Materno">
+                <div *ngIf="hasError('materno', 'required')" class="text-danger small">
+                  El apellido materno es requerido.
+                </div>
+              </div>
+  
+              <!-- Dirección -->
+              <div class="mb-3">
+                <input type="text" id="direccion" formControlName="direccion" class="form-control" placeholder="Dirección">
+                <div *ngIf="hasError('direccion', 'required')" class="text-danger small">
+                  La dirección es requerida.
+                </div>
+              </div>
+  
+              <!-- Username -->
+              <div class="mb-3">
+                <input type="text" id="username" formControlName="username" class="form-control" placeholder="Username">
+                <div *ngIf="hasError('username', 'required')" class="text-danger small">
+                  El username es requerido.
+                </div>
+                <div *ngIf="hasError('username', 'minlength')" class="text-danger small">
+                  El username debe tener al menos 6 caracteres.
+                </div>
+              </div>
+  
+              <!-- Email -->
+              <div class="mb-3">
+                <input type="email" id="email" formControlName="email" class="form-control" placeholder="Email">
+                <div *ngIf="hasError('email', 'required')" class="text-danger small">
+                  El email es requerido.
+                </div>
+                <div *ngIf="hasError('email', 'email')" class="text-danger small">
+                  Ingresa un email válido.
+                </div>
+              </div>
+  
+              <div class="row">
+                <!-- Password -->
+                <div class="col-md-6 mb-3">
+                  <input type="password" id="password" formControlName="password" class="form-control" placeholder="Contraseña">
+                  <div *ngIf="hasError('password', 'required')" class="text-danger small">
+                    La contraseña es requerida.
+                  </div>
+                  <div *ngIf="hasError('password', 'minlength')" class="text-danger small">
+                    La contraseña debe tener al menos 8 caracteres.
+                  </div>
+                </div>
+  
+                <!-- Confirmar Password -->
+                <div class="col-md-6 mb-3">
+                  <input type="password" id="confirm_password" formControlName="confirm_password" class="form-control" placeholder="Confirmar Contraseña">
+                  <div *ngIf="hasError('confirm_password', 'required')" class="text-danger small">
+                    La confirmación de contraseña es requerida.
+                  </div>
+                  <div *ngIf="hasError('confirm_password', 'mustMatch')" class="text-danger small">
+                    Las contraseñas no coinciden.
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Rol -->
+              <div class="mb-3">
+                <select id="id_rol" formControlName="id_rol" class="form-select">
+                  <option value="">Selecciona un rol</option>
+                  <option *ngFor="let rol of roles" [value]="rol.id">{{ rol.name }}</option>
+                </select>
+                <div *ngIf="hasError('id_rol', 'required')" class="text-danger small">
+                  El rol es requerido.
+                </div>
+              </div>
+  
+              <!-- Botón de Enviar -->
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary px-5" [disabled]="registerForm.invalid">Registrar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+<br>
+<app-footer></app-footer>

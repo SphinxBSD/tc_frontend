@@ -85,4 +85,8 @@ export class LoginPageComponent {
     //   this.errorMessage = 'Por favor, llena ambos campos';
     // }
   }
+
+  navigateToRegister(): void {
+    this.router.navigate(['/auth/registrar']);
+  }
 }
