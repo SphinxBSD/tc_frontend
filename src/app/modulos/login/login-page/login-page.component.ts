@@ -30,6 +30,7 @@ export class LoginPageComponent {
   password: string = '';
   errorMessage: string = '';
   loading = false;
+  showPassword = false;
 
   constructor(private authService: AuthService,
       private router: Router,
@@ -48,7 +49,9 @@ export class LoginPageComponent {
         this.authService.login(this.username, this.password, tokenCaptcha).subscribe({
           next: (response) => {
             this.loading = false;
-            console.log('Login exitoso', response);
+            console.log('Login exitoso');
+            this.authService.setToken(response.token);
+            
             this.router.navigate(['/auth/home']);
             // Redirigir o manejar la sesión de usuario aquí
           },
@@ -64,29 +67,13 @@ export class LoginPageComponent {
       }
     });
 
-
-    // if (this.username && this.password) {
-    //   console.log('Login', this.username, this.password);
-    //   this.authService.login(this.username, this.password).subscribe({
-    //     next: (response) => {
-    //       if (response.success) {
-    //         // Redirigir a otra página después del login exitoso
-    //         this.router.navigate(['/auth/home']);
-    //       } else {
-    //         this.errorMessage = 'Credenciales incorrectas';
-    //       }
-    //     },
-    //     error: (err) => {
-    //       this.errorMessage = 'Ocurrió un error, intenta de nuevo';
-    //       console.error(err);
-    //     }
-    //   });
-    // } else {
-    //   this.errorMessage = 'Por favor, llena ambos campos';
-    // }
   }
 
   navigateToRegister(): void {
     this.router.navigate(['/auth/registrar']);
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

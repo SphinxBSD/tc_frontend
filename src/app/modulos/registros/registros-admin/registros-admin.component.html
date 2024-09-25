@@ -1,0 +1,97 @@
+<div class="container">
+    <div class="row justify-content-center">
+        @if(!this.hideButtons){
+            <div class="col-md-10">
+                <h2 class="label">Registro Artesano</h2>
+                <!-- Imagen para registrar Empresa -->
+                <div class="my-3">
+                  <a (click)="mostrarFormulario('empresa')">
+                    <img
+                      src="assets/images/empresa1.png"
+                      alt="Registro de Empresa"
+                      class="img-fluid"
+                    />
+                  </a>
+                </div>
+                <!-- Imagen para registrar Comunidad -->
+                <h2 class="label">Registro Comunidad</h2>
+                <div class="my-3">
+                  <a (click)="mostrarFormulario('comunidad')">
+                    <img
+                      src="assets/images/comunidad1.jpg"
+                      alt="Registro de Comunidad"
+                      class="img-fluid"
+                    />
+                  </a>
+                </div>
+              </div>
+        }
+      
+    </div>
+  
+    <!-- Formulario para registrar Empresa -->
+    <div *ngIf="formularioActual === 'empresa'" class="mt-5">
+        <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
+      <h3 class="label">Formulario de Registro de Empresa</h3>
+      <form (ngSubmit)="submitEmpresa()">
+        <div class="form-group">
+          <label class="sub-label" for="nombreEmpresa">Nombre de la Empresa</label>
+          <input type="text" id="nombreEmpresa" class="form-control" [(ngModel)]="empresa.nombre" name="nombreEmpresa" required />
+        </div>
+        <div class="form-group mt-3">
+          <label class="sub-label" for="direccionEmpresa">Dirección de la Empresa</label>
+          <input type="text" id="direccionEmpresa" class="form-control" [(ngModel)]="empresa.direccion" name="direccionEmpresa" required />
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Registrar Empresa</button>
+      </form>
+    </div>
+  
+    <!-- Formulario para registrar Comunidad -->
+    <div *ngIf="formularioActual === 'comunidad'" class="mt-5">
+        <button type="button" class="btn btn-warning mt-3" (click)="showButtons()" >Volver</button>
+      <h3 class="label">Formulario de Registro de Comunidad</h3>
+      <form (ngSubmit)="submitComunidad()" [formGroup]="comunidadForm" enctype="multipart/form-data">
+        <div class="form-group">
+          <label class="sub-label" for="nombreComunidad">Nombre de la Comunidad</label>
+          <input type="text" id="nombreComunidad" class="form-control" formControlName="nombre" required />
+        </div>
+        <div class="form-group">
+            <label class="sub-label" for="departamento">Departamento</label>
+            <input type="text" id="departamento" class="form-control" formControlName="departamento" required />
+        </div>
+        <div class="form-group">
+            <label class="sub-label" for="provincia">Provincia</label>
+            <input type="text" id="provincia" class="form-control" formControlName="provincia" required />
+        </div>
+        <div class="form-group">
+            <label class="sub-label" for="municipio">Municipio</label>
+            <input type="text" id="municipio" class="form-control" formControlName="municipio" required />
+        </div>
+        <div style="margin-top: 2%;">
+          @if(!isUpload){
+            <div class="card">
+              <h3>Subir documento</h3>
+              <div class="drop_box">
+                <header>
+                  <h4>Seleccione el archivo</h4>
+                </header>
+                <p>Archivos soportados: PDF, DOCX</p>
+                <input #documento id="documento" type="file" hidden accept=".doc,.docx,.pdf" (change)="onFileSelected($event)" style="display:none;">
+                <button class="btn-file" (click)="triggerFileInput()">Elegir archivo</button>
+              </div>
+          
+            </div>
+          }@else {
+            <div>
+              <h3 style="color: aliceblue;">Archivo subido!</h3>
+            </div>
+          }
+          
+            <!-- <label class="sub-label" for="documento">Adjuntar archivo PDF:</label>
+            <input id="documento" type="file" (change)="onFileSelected($event)" accept="application/pdf"> -->
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Registrar Comunidad</button>
+      </form>
+    </div>
+  </div>
+  

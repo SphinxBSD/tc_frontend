@@ -1,0 +1,72 @@
+<div style="background-color: rgba(184, 150, 107, 0.671);">
+    <app-header></app-header>
+    <div class="container mt-5 d-flex justify-content-center" >
+        <div class="row w-100">
+
+            <!-- Columna del Formulario -->
+            <div class="col-md-6">
+            <div class="profile-container">
+        <h2>Perfil de Usuario - {{ this.rolName }}</h2>
+        
+        <form [formGroup]="userProfileForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+            <label for="username">Username:</label>
+            <input id="username" formControlName="username" type="text" class="form-control">
+            </div>
+
+            <div class="form-group">
+            <label for="email">Email:</label>
+            <input id="email" formControlName="email" type="email" class="form-control">
+            </div>
+
+            <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input id="nombre" formControlName="nombre" type="text" class="form-control">
+            </div>
+
+            <div class="form-group">
+            <label for="paterno">Apellido Paterno:</label>
+            <input id="paterno" formControlName="paterno" type="text" class="form-control">
+            </div>
+
+            <div class="form-group">
+            <label for="materno">Apellido Materno:</label>
+            <input id="materno" formControlName="materno" type="text" class="form-control">
+            </div>
+
+            <div class="form-group">
+            <label for="fecha_nac">Fecha de Nacimiento:</label>
+            <input id="fecha_nac" formControlName="fecha_nac" type="date" class="form-control">
+            </div>
+
+            <div class="form-group">
+            <label for="direccion">Dirección:</label>
+            <input id="direccion" formControlName="direccion" type="text" class="form-control">
+            </div>
+
+            <button type="button" class="btn btn-primary" (click)="toggleEditMode()">
+            {{ isEditMode ? 'Cancelar' : 'Editar' }}
+            </button>
+
+            <button type="submit" class="btn btn-success" *ngIf="isEditMode">
+            Guardar Cambios
+            </button>
+        </form>
+  
+</div>
+
+          </div>
+          
+          <!-- Columna de la Imagen -->
+          <div class="col-md-6 d-none d-md-flex justify-content-center align-items-center card shadow-lg" style="background-color:#6B3E26;">
+            <!-- <img src="assets/images/logo1.png" alt="Logo de la Empresa" class="img-fluid" style="max-height: 400px;"> -->
+             <app-registros-artesano></app-registros-artesano>
+          </div>
+
+        </div>
+      </div>
+      
+      
+    <br>
+    <app-footer></app-footer>
+</div>

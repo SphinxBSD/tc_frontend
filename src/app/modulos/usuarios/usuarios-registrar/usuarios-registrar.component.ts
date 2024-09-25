@@ -1,5 +1,5 @@
 import { Component, OnInit  } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl  } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -39,7 +39,7 @@ function MustMatch(controlName: string, matchingControlName: string) {
 export class UsuariosRegistrarComponent implements OnInit {
   registerForm!: FormGroup;
   roles = [
-    { id: 1, name: 'Administrador' },
+    // { id: 1, name: 'Administrador' },
     { id: 2, name: 'Comprador' },
     { id: 3, name: 'Artesano' }
   ];
@@ -58,7 +58,7 @@ export class UsuariosRegistrarComponent implements OnInit {
       direccion: ['', Validators.required],
       username: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(8), this.passwordValidator]],
       confirm_password: ['', Validators.required],
       id_rol: ['', Validators.required]
     }, {
@@ -89,7 +89,7 @@ export class UsuariosRegistrarComponent implements OnInit {
        ).subscribe({
         next: (response) => {
           console.log('Usuario registrado con éxito', response);
-          this.router.navigate(['/auth/home']);
+          this.router.navigate(['/auth/login']);
           // Redirigir o manejar la sesión de usuario aquí
         },
         error: (err) => {
@@ -98,4 +98,21 @@ export class UsuariosRegistrarComponent implements OnInit {
       });
     }
   }
+
+  navigateToLogin(){
+    this.router.navigate(['/auth/login']);
+  }
+
+    // Custom validator for password
+    passwordValidator(control: AbstractControl) {
+      const password = control.value;
+      const hasNumber = /[0-9]/.test(password);
+      const hasLetter = /[a-zA-Z]/.test(password);
+      const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+      
+      if (!hasNumber || !hasLetter || !hasSpecial) {
+        return { passwordStrength: true };
+      }
+      return null;
+    }
 }
