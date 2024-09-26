@@ -44,6 +44,7 @@ export class UsuariosAdministradorComponent implements OnInit {
       materno: [''],
       fecha_nac: ['', Validators.required],
       direccion: [''],
+      telefono: [''],
       roles: [{ value: '', disabled: true }]  // Los roles no son editables por el usuario
     });
   }
@@ -63,6 +64,7 @@ export class UsuariosAdministradorComponent implements OnInit {
           materno: data.materno,
           fecha_nac: data.fecha_nac,
           direccion: data.direccion,
+          telefono: data.telefono,
          // roles: data.roles.join(', ')  // Muestra los roles en una lista separada por comas
         });
       },

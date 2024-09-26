@@ -7,6 +7,7 @@ export interface Usuario {
     materno: string;
     fecha_nac: Date;
     direccion: string;
+    telefono: number;
     roles: string; // Array de roles del usuario
   }
   

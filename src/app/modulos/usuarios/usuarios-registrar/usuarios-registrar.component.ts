@@ -39,7 +39,7 @@ function MustMatch(controlName: string, matchingControlName: string) {
 export class UsuariosRegistrarComponent implements OnInit {
   registerForm!: FormGroup;
   roles = [
-    // { id: 1, name: 'Administrador' },
+    { id: 1, name: 'Encargado' },
     { id: 2, name: 'Comprador' },
     { id: 3, name: 'Artesano' }
   ];
@@ -56,6 +56,7 @@ export class UsuariosRegistrarComponent implements OnInit {
       materno: ['', Validators.required],
       fecha_nac: ['', Validators.required],
       direccion: ['', Validators.required],
+      telefono: ['', Validators.required],
       username: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8), this.passwordValidator]],
@@ -82,6 +83,7 @@ export class UsuariosRegistrarComponent implements OnInit {
         userData.materno,
         userData.fecha_nac,
         userData.direccion,
+        userData.telefono,
         userData.username,
         userData.email,
         userData.password,

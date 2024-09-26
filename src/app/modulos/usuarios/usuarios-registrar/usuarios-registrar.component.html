@@ -75,6 +75,14 @@
                     La dirección es requerida.
                   </div>
                 </div>
+
+                <!-- Telefono -->
+                <div class="mb-3">
+                  <input type="text" id="telefono" formControlName="telefono" class="form-control" placeholder="Telefono">
+                  <div *ngIf="hasError('telefono', 'required')" class="text-danger small">
+                    El telefono es requerido.
+                  </div>
+                </div>
     
                 <!-- Username -->
                 <div class="mb-3">

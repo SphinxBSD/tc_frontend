@@ -47,7 +47,7 @@ export class HomePageComponent implements OnInit{
 
   redirectTo(): void {
 
-    if (this.usuarioRol === 'Administrador') {
+    if (this.usuarioRol === 'Encargado') {
       this.router.navigate(['/auth/administrador']);
     } else if (this.usuarioRol === 'Comprador') {
       this.router.navigate(['/auth/comprador']);

@@ -72,12 +72,13 @@ export class AuthService {
       materno:string,
       fecha_nac: Date,
       direccion:string,
+      telefono: number,
       username:string,
       email:string,
       password:string,
       id_rol:number): Observable<any> {
     
-    const registerData = { ci, nombre, paterno, materno, fecha_nac, direccion, username, email, password, id_rol };
+    const registerData = { ci, nombre, paterno, materno, fecha_nac, direccion, telefono, username, email, password, id_rol };
     console.log('Datos enviados:', registerData);
     return this.http.post(this.apiUrl + '/users/registrar', registerData);
   }

@@ -6,6 +6,7 @@ import { NotfoundComponent } from "../shared/notfound/notfound.component";
 import { AuthGuard } from '../guards/auth.guard';
 import { UsuariosAdministradorComponent } from "./usuarios/usuarios-administrador/usuarios-administrador.component";
 import { UsuariosArtesanoComponent } from "./usuarios/usuarios-artesano/usuarios-artesano.component";
+import { ProductosPageComponent } from "./productos/productos-page/productos-page.component";
 
 export const routes: Routes = [
     {
@@ -35,6 +36,10 @@ export const routes: Routes = [
     {
         path: 'artesano',
         component: UsuariosArtesanoComponent,
+    },
+    {
+        path: 'productos',
+        component: ProductosPageComponent,
     },
     {
         path: '**',
