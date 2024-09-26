@@ -32,7 +32,34 @@
     <!-- Formulario para registrar Empresa -->
     <div *ngIf="formularioActual === 'empresa'" class="mt-5">
         <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
-      <h3 class="label">Formulario de Registro de Empresa</h3>
+      
+        <div class="container mt-5">
+          <h2 class="text-center">Lista de Artesanos de la comunidad</h2>
+          <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+              <tr>
+                <th>Username</th>
+                <th>Nombre</th>
+                <th>Paterno</th>
+                <th>Materno</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let usuario of usuarios">
+                <td>{{ usuario.username }}</td>
+                <td>{{ usuario.nombre }}</td>
+                <td>{{ usuario.paterno }}</td>
+                <td>{{ usuario.materno }}</td>
+                <td>{{ usuario.telefono }}</td>
+                <td>{{ usuario.direccion }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- <h3 class="label">Formulario de Registro de Empresa</h3>
       <form (ngSubmit)="submitEmpresa()">
         <div class="form-group">
           <label class="sub-label" for="nombreEmpresa">Nombre de la Empresa</label>
@@ -43,7 +70,7 @@
           <input type="text" id="direccionEmpresa" class="form-control" [(ngModel)]="empresa.direccion" name="direccionEmpresa" required />
         </div>
         <button type="submit" class="btn btn-primary mt-3">Registrar Empresa</button>
-      </form>
+      </form> -->
     </div>
   
     <!-- Formulario para registrar Comunidad -->

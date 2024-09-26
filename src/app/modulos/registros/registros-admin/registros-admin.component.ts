@@ -2,6 +2,14 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule, Validators, FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ComunidadService } from '../../../services/comunidad/comunidad.service';
+interface Usuario {
+  username: string;
+  nombre: string;
+  paterno: string;
+  materno: string;
+  telefono: number;
+  direccion: string;
+}
 // import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
@@ -18,6 +26,17 @@ export class RegistrosAdminComponent {
   selectedFile: File | null = null;
   selectedFileName: string = '';
   isUpload: boolean = false;
+
+  usuarios: Usuario[] = [
+    { username: 'jdoe', nombre: 'John', paterno: 'Doe', materno: 'Smith', telefono: 5551234, direccion: '123 Elm St' },
+    { username: 'mjane', nombre: 'Mary', paterno: 'Jane', materno: 'Johnson', telefono: 5555678, direccion: '456 Oak St' },
+    { username: 'rwilliams', nombre: 'Robert', paterno: 'Williams', materno: 'Brown', telefono: 5558765, direccion: '789 Pine St' },
+    { username: 'adavis', nombre: 'Alice', paterno: 'Davis', materno: 'Martinez', telefono: 5556543, direccion: '101 Maple St' },
+    { username: 'bpeters', nombre: 'Bruce', paterno: 'Peters', materno: 'Garcia', telefono: 5554321, direccion: '102 Birch St' },
+    { username: 'crogers', nombre: 'Cathy', paterno: 'Rogers', materno: 'Lopez', telefono: 5552468, direccion: '202 Cedar St' },
+    { username: 'smorris', nombre: 'Steve', paterno: 'Morris', materno: 'Lee', telefono: 5551357, direccion: '303 Fir St' },
+    { username: 'lgreen', nombre: 'Laura', paterno: 'Green', materno: 'Gonzalez', telefono: 5559753, direccion: '404 Spruce St' }
+  ];
 
   @ViewChild('documento', { static: false }) fileInput!: ElementRef;
 
