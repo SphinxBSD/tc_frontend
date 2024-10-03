@@ -2,14 +2,9 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule, Validators, FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ComunidadService } from '../../../services/comunidad/comunidad.service';
-interface Usuario {
-  username: string;
-  nombre: string;
-  paterno: string;
-  materno: string;
-  telefono: number;
-  direccion: string;
-}
+import { Solicitud } from '../../../models/solicitud.model';
+import { Comunario } from '../../../models/comunario.model';
+
 // import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
@@ -26,17 +21,12 @@ export class RegistrosAdminComponent {
   selectedFile: File | null = null;
   selectedFileName: string = '';
   isUpload: boolean = false;
+  isComunidad: boolean = false;
 
-  usuarios: Usuario[] = [
-    { username: 'jdoe', nombre: 'John', paterno: 'Doe', materno: 'Smith', telefono: 5551234, direccion: '123 Elm St' },
-    { username: 'mjane', nombre: 'Mary', paterno: 'Jane', materno: 'Johnson', telefono: 5555678, direccion: '456 Oak St' },
-    { username: 'rwilliams', nombre: 'Robert', paterno: 'Williams', materno: 'Brown', telefono: 5558765, direccion: '789 Pine St' },
-    { username: 'adavis', nombre: 'Alice', paterno: 'Davis', materno: 'Martinez', telefono: 5556543, direccion: '101 Maple St' },
-    { username: 'bpeters', nombre: 'Bruce', paterno: 'Peters', materno: 'Garcia', telefono: 5554321, direccion: '102 Birch St' },
-    { username: 'crogers', nombre: 'Cathy', paterno: 'Rogers', materno: 'Lopez', telefono: 5552468, direccion: '202 Cedar St' },
-    { username: 'smorris', nombre: 'Steve', paterno: 'Morris', materno: 'Lee', telefono: 5551357, direccion: '303 Fir St' },
-    { username: 'lgreen', nombre: 'Laura', paterno: 'Green', materno: 'Gonzalez', telefono: 5559753, direccion: '404 Spruce St' }
-  ];
+  comunarios: Comunario[] = [];
+
+  solicitudes: Solicitud[] = [];
+  error: string = '';
 
   @ViewChild('documento', { static: false }) fileInput!: ElementRef;
 
@@ -57,6 +47,52 @@ export class RegistrosAdminComponent {
 
   // Función para mostrar el formulario correspondiente
   mostrarFormulario(tipo: string) {
+
+    if (tipo === 'artesano'){
+
+      this.comunidadService.getArtesanosComunarios().subscribe({
+        next: (data) => {
+          this.comunarios = data;
+          console.log('Artesanos comunarios:', data);
+        },
+        error: (err) => {
+          console.error('Error al cargar los artesanos comunarios', err);
+        }
+      });
+      // Aquí puedes manejar la lógica para mostrar el formulario de registro de artesano
+      this.comunidadService.getSolicitudesByUsuario().subscribe({
+        next: (data) => {
+          this.solicitudes = data;
+          console.log('Solicitudes del usuario:', data);
+        },
+        error: (err) => {
+          console.error('Error al cargar las solicitudes del usuario', err);
+        }
+      });
+    }
+
+    //Buscar si el usuario tiene ya una comunidad registrada
+    if (tipo === 'comunidad') {
+      this.comunidadService.getComunidadesByUsuario().subscribe({
+        next: (data) => {
+          if (data && data.length > 0) {
+            //this.comunidadData = data[0]; // Asignamos solo la primera comunidad si hay más
+            this.comunidadForm.patchValue(
+              data[0]
+            ); // Actualizamos el formulario con los datos
+            this.isUpload = true;
+            this.isComunidad = true;
+          } else {
+            //this.comunidadData = null; // Si no hay datos, dejarlo vacío
+            this.comunidadForm.reset(); // Limpiamos el formulario
+          }
+        },
+        error: (err) => {
+          console.error('Error al cargar la comunidad del usuario', err);
+          this.comunidadForm.reset(); // Si hay un error, limpiamos el formulario
+        }
+      });
+    }
     this.formularioActual = tipo;
     this.hideButtons = true;
   }
@@ -122,5 +158,18 @@ export class RegistrosAdminComponent {
 
   triggerFileInput(): void {
     this.fileInput.nativeElement.click();
+  }
+
+  aprobarSolicitud(solicitud: Solicitud): void {
+    console.log('Aprobando solicitud:', solicitud);
+    this.comunidadService.aprobarSolicitud(solicitud.id_comunidad, solicitud.id_solicitante).subscribe({
+      next: (data) => {
+        console.log('Solicitud aprobada:', data);
+      },
+      error: (err) => {
+        console.error('Error al aprobar la solicitud', err);
+      }
+    });
+    // Aquí puedes manejar la lógica para aprobar la solicitud
   }
 }

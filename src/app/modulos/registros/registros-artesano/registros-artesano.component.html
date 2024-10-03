@@ -1,1 +1,101 @@
-<p>registros-artesano works!</p>
+<div class="container">
+    <div class="row justify-content-center">
+        @if(!this.hideButtons){
+            <div class="col-md-10">
+                <h2 class="label">Registro Productos</h2>
+                <!-- Imagen para registrar Empresa -->
+                <div class="my-3">
+                  <a (click)="mostrarFormulario('productos')">
+                    <img
+                      src="assets/images/prod1.jpeg"
+                      alt="Registro de Empresa"
+                      class="img-fluid"
+                    />
+                  </a>
+                </div>
+                <!-- Imagen para registrar Comunidad -->
+                <h2 class="label">Registro Comunidad</h2>
+                <div class="my-3">
+                  <a (click)="mostrarFormulario('comunidad')">
+                    <img
+                      src="assets/images/comunidad1.jpg"
+                      alt="Registro de Comunidad"
+                      class="img-fluid"
+                    />
+                  </a>
+                </div>
+              </div>
+        }
+      
+    </div>
+
+    <div *ngIf="formularioActual === 'productos'" class="mt-5">
+        <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
+
+    </div>
+
+    <!-- FORMULARIO PARA REGISTRARSE A LA COMUNIDAD -->
+    <div *ngIf="formularioActual === 'comunidad'" class="mt-5">
+        <div class="container mt-5">
+            <h2 class="mb-4">Listado de Comunidades</h2>
+          
+            <div *ngIf="loading" class="alert alert-info">
+              Cargando comunidades...
+            </div>
+          
+            <div *ngIf="error" class="alert alert-danger">
+              {{ error }}
+            </div>
+          
+            <table *ngIf="!loading && !error" class="table table-striped table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Nombre</th>
+                  <th>Departamento</th>
+                  <th>Provincia</th>
+                  <th>Municipio</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let comunidad of comunidades">
+                  <td>{{ comunidad.nombre }}</td>
+                  <td>{{ comunidad.departamento }}</td>
+                  <td>{{ comunidad.provincia }}</td>
+                  <td>{{ comunidad.municipio }}</td>
+                  <td>
+                    <button 
+                      class="btn btn-primary btn-sm"
+                      data-bs-toggle="modal" data-bs-target="#solicitudComunidadModal"
+                      (click)="handleButtonClick(comunidad)">
+                      Solicitar unirme
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>          
+        <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="solicitudComunidadModal" tabindex="-1" aria-labelledby="solicitudComunidadLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="solicitudComunidadLabel">Solicitud para unirse a comunidad</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>¿Está seguro de unirse a la comunidad <strong>{{ selectedComunidad?.nombre }}</strong> ubicada en el departamento de <strong>{{ selectedComunidad?.departamento }}</strong>?</p>
+          <textarea class="form-control" [(ngModel)]="solicitudMensaje" placeholder="Escriba un mensaje..."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelarSolicitud()">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="sendSolicitud(selectedComunidad)">Enviar Solicitud</button>
+        </div>
+      </div>
+    </div>
+  </div>
