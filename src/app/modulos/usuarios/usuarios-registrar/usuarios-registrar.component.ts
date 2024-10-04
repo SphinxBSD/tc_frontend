@@ -8,6 +8,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FooterComponent } from "../../../shared/footer/footer.component";
 import { HeaderComponent } from "../../../shared/header/header.component";
+import Swal from 'sweetalert2';
 
 
 // Validator personalizado para confirmar que las contraseñas coinciden
@@ -90,11 +91,26 @@ export class UsuariosRegistrarComponent implements OnInit {
         userData.id_rol
        ).subscribe({
         next: (response) => {
-          console.log('Usuario registrado con éxito', response);
+          
+          // console.log('Usuario registrado con éxito', response);
           this.router.navigate(['/auth/login']);
           // Redirigir o manejar la sesión de usuario aquí
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Usuario registrado con éxito",
+            showConfirmButton: false,
+            timer: 2000
+          });
         },
         error: (err) => {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Error al registrar el usuario",
+            showConfirmButton: false,
+            timer: 2000
+          });
           console.error('Error al registrar el usuario', err);
         }
       });

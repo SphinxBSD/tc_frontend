@@ -22,7 +22,7 @@ export const routes: Routes = [
     {
         path: 'home',
         component: HomePageComponent,
-        // canActivate: [AuthGuard]
+        
         
     },
     {
@@ -32,10 +32,12 @@ export const routes: Routes = [
     {
         path: 'administrador',
         component: UsuariosAdministradorComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'artesano',
         component: UsuariosArtesanoComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'productos',

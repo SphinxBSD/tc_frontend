@@ -4,6 +4,7 @@ import { ComunidadService } from '../../../services/comunidad/comunidad.service'
 import { Comunidad } from '../../../models/comunidad.model';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 // import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -23,6 +24,11 @@ export class RegistrosArtesanoComponent {
   loading: boolean = false;
   error: string = '';
 
+  nombre_com: string = 'fdfdfddf';
+  departamento: string = '';
+  municipio: string = '';
+  provincia: string = '';
+
   // Variables para el modal
   selectedComunidad: Comunidad | null = null;
   solicitudMensaje: string = '';
@@ -32,17 +38,22 @@ export class RegistrosArtesanoComponent {
   hideButtons: boolean = false;
   formularioActual: string | null = null;
 
+  hasComunidad: boolean = false;
+
   constructor(
     private comunidadService: ComunidadService,
     private router: Router,
   ) { 
-    
+    this.buscarComunidad();
   }
 
   mostrarFormulario(tipo: string) {
     //Buscar si el usuario tiene ya una comunidad registrada
     if (tipo === 'comunidad') {
-      this.fetchComunidades();
+      if (!this.hasComunidad){
+        this.fetchComunidades();
+      }
+      
     }
     this.formularioActual = tipo;
     this.hideButtons = true;
@@ -51,6 +62,24 @@ export class RegistrosArtesanoComponent {
   showButtons(){
     this.hideButtons = false;
     this.formularioActual = null;
+  }
+
+  buscarComunidad(){
+    this.comunidadService.getComunidadesByUsuario().subscribe({
+      next: (data) => {
+        if (data){
+          this.hasComunidad = true;
+          const aux = data[0]
+          this.nombre_com = aux.nombre;
+          this.departamento = aux.departamento;
+          this.municipio = aux.municipio;
+          this.provincia = aux.provincia;
+        }
+      },
+      error: (err) => {
+        console.error('Error al obtener la comunidad:', err);
+      }
+    });
   }
 
   fetchComunidades(): void {
@@ -94,16 +123,30 @@ export class RegistrosArtesanoComponent {
         next: (response) => {
           this.sending = false;
           this.sendSuccess = 'Solicitud enviada exitosamente.';
-          console.log('Solicitud enviada:', response);
+          // console.log('Solicitud enviada:', response);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Solicitud enviada con éxito",
+            showConfirmButton: false,
+            timer: 2000
+          });
           this.solicitudMensaje = '';
           this.selectedComunidad = null;
           // this.router.reload(); // Cerrar el modal al enviar la solicitud exitosamente
           // Cerrar el modal al enviar la solicitud exitosamente
         },
         error: (err) => {
-          console.error('Error al enviar la solicitud:', err);
+          // console.error('Error al enviar la solicitud:', err);
           this.sendError = 'Ocurrió un error al enviar la solicitud.';
           this.sending = false;
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Error al enviar la solicitud",
+            showConfirmButton: false,
+            timer: 2000
+          });
         }
       });
     }

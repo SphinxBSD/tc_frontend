@@ -56,14 +56,15 @@ export class UsuariosArtesanoComponent implements OnInit {
       next: (data: Usuario) => {
         this.user = data;
         this.rolName = data.roles;  // Obtiene el nombre del rol del usuario
-        console.log('Perfil del usuario:', data);
+        // console.log('Perfil del usuario:', data);
+        const formattedDate = new Date(data.fecha_nac).toISOString().split('T')[0];
         this.userProfileForm.patchValue({
           username: data.username,
           email: data.email,
           nombre: data.nombre,
           paterno: data.paterno,
           materno: data.materno,
-          fecha_nac: data.fecha_nac,
+          fecha_nac: formattedDate,
           direccion: data.direccion,
          // roles: data.roles.join(', ')  // Muestra los roles en una lista separada por comas
         });

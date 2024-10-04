@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ComunidadService } from '../../../services/comunidad/comunidad.service';
 import { Solicitud } from '../../../models/solicitud.model';
 import { Comunario } from '../../../models/comunario.model';
+import Swal from 'sweetalert2';
 
 // import { BrowserModule } from '@angular/platform-browser';
 
@@ -116,7 +117,14 @@ export class RegistrosAdminComponent {
           // Define un observer para manejar los resultados de la suscripción
     const comunidadObserver = {
       next: (response: any) => {
-        console.log('Comunidad registrada exitosamente', response);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Comunidad registrada con éxito",
+          showConfirmButton: false,
+          timer: 2000
+        });
+        // console.log('Comunidad registrada exitosamente', response);
         this.comunidadForm.reset();
         this.selectedFile = null;
         this.selectedFileName = '';
@@ -164,10 +172,24 @@ export class RegistrosAdminComponent {
     console.log('Aprobando solicitud:', solicitud);
     this.comunidadService.aprobarSolicitud(solicitud.id_comunidad, solicitud.id_solicitante).subscribe({
       next: (data) => {
-        console.log('Solicitud aprobada:', data);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Solicitud aprobada con éxito",
+          showConfirmButton: false,
+          timer: 2000
+        });
+        // console.log('Solicitud aprobada:', data);
       },
       error: (err) => {
         console.error('Error al aprobar la solicitud', err);
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al aprobar la solicitud",
+          showConfirmButton: false,
+          timer: 2000
+        });
       }
     });
     // Aquí puedes manejar la lógica para aprobar la solicitud

@@ -7,6 +7,7 @@ import { UserService } from '../../../services/user/user.service';
 import { Usuario } from '../../../models/usuario.model';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistrosAdminComponent } from '../../registros/registros-admin/registros-admin.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuarios-administrador',
@@ -55,14 +56,15 @@ export class UsuariosAdministradorComponent implements OnInit {
       next: (data: Usuario) => {
         this.user = data;
         this.rolName = data.roles;  // Obtiene el nombre del rol del usuario
-        console.log('Perfil del usuario:', data);
+        // console.log('Perfil del usuario:', data);
+        const formattedDate = new Date(data.fecha_nac).toISOString().split('T')[0];
         this.userProfileForm.patchValue({
           username: data.username,
           email: data.email,
           nombre: data.nombre,
           paterno: data.paterno,
           materno: data.materno,
-          fecha_nac: data.fecha_nac,
+          fecha_nac: formattedDate,
           direccion: data.direccion,
           telefono: data.telefono,
          // roles: data.roles.join(', ')  // Muestra los roles en una lista separada por comas
@@ -96,11 +98,25 @@ export class UsuariosAdministradorComponent implements OnInit {
 
       this.userService.updateUserProfile(updatedUser).subscribe({
         next: (response) => {
-          console.log('Perfil actualizado con éxito');
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Usuario actualizado con éxito",
+            showConfirmButton: false,
+            timer: 2000
+          });
+          // console.log('Perfil actualizado con éxito');
           this.toggleEditMode();  // Sale del modo de edición
         },
         error: (error) => {
           console.error('Error al actualizar el perfil del usuario', error);
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Error al actualizar el usuario",
+            showConfirmButton: false,
+            timer: 2000
+          });
         }
       });
     }

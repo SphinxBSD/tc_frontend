@@ -2,6 +2,7 @@ import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth/auth.service';  // Importa el servicio
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-password-recovery-modal',
@@ -93,12 +94,24 @@ export class PasswordRecoveryModalComponent implements AfterViewInit {
     this.authService.recover(username, email).subscribe({
       next: (response) => {
         // Manejar respuesta exitosa
-        alert('Recuperación de contraseña solicitada exitosamente');
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Recuperacion exitosa",
+          showConfirmButton: false,
+          timer: 2000
+        });
       },
       error: (error) => {
         // Manejar error
         console.error('Error al solicitar la recuperación de contraseña:', error);
-        alert('Hubo un error. Inténtalo de nuevo.');
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error en la recuperacion",
+          showConfirmButton: false,
+          timer: 2000
+        });
       },
     });
   }
