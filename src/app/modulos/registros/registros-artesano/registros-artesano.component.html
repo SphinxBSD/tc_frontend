@@ -31,6 +31,82 @@
 
     <div *ngIf="formularioActual === 'productos'" class="mt-5">
         <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
+        <!-- src/app/components/registrar-producto/registrar-producto.component.html -->
+<div class="container mt-5">
+  <h2>Registrar Nuevo Producto</h2>
+  <form [formGroup]="productoForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label for="id_categoria" class="form-label">Categoría</label>
+      <select id="id_categoria" formControlName="id_categoria" class="form-select" 
+              [ngClass]="{'is-invalid': productoForm.get('id_categoria')?.invalid && productoForm.get('id_categoria')?.touched}">
+        <option value="">Seleccione una categoría</option>
+        <option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">{{ categoria.nombre }}</option>
+      </select>
+      <div class="invalid-feedback">
+        Categoría es requerida.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="nombre_producto" class="form-label">Nombre del Producto</label>
+      <input type="text" id="nombre_producto" formControlName="nombre_producto" class="form-control" 
+             [ngClass]="{'is-invalid': productoForm.get('nombre_producto')?.invalid && productoForm.get('nombre_producto')?.touched}">
+      <div class="invalid-feedback">
+        Nombre del producto es requerido.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="descripcion" class="form-label">Descripción</label>
+      <textarea id="descripcion" formControlName="descripcion" class="form-control" 
+                [ngClass]="{'is-invalid': productoForm.get('descripcion')?.invalid && productoForm.get('descripcion')?.touched}"></textarea>
+      <div class="invalid-feedback">
+        Descripción es requerida.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="precio" class="form-label">Precio</label>
+      <input type="number" id="precio" formControlName="precio" class="form-control" 
+             [ngClass]="{'is-invalid': productoForm.get('precio')?.invalid && productoForm.get('precio')?.touched}">
+      <div class="invalid-feedback">
+        Precio es requerido y debe ser un número positivo.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="id_elaboracion" class="form-label">Tipo de Elaboración</label>
+      <select id="id_elaboracion" formControlName="id_elaboracion" class="form-select" 
+              [ngClass]="{'is-invalid': productoForm.get('id_elaboracion')?.invalid && productoForm.get('id_elaboracion')?.touched}">
+        <option value="">Seleccione un tipo de elaboración</option>
+        <option *ngFor="let elaboracion of elaboraciones" [value]="elaboracion.id_elaboracion">{{ elaboracion.tipo }}</option>
+      </select>
+      <div class="invalid-feedback">
+        Tipo de elaboración es requerido.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="cantidad" class="form-label">Cantidad en Inventario</label>
+      <input type="number" id="cantidad" formControlName="cantidad" class="form-control" 
+             [ngClass]="{'is-invalid': productoForm.get('cantidad')?.invalid && productoForm.get('cantidad')?.touched}">
+      <div class="invalid-feedback">
+        Cantidad es requerida y debe ser al menos 1.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="fotos" class="form-label">Fotos del Producto (Mínimo 4)</label>
+      <input type="file" id="fotos" (change)="onFileChange($event)" multiple accept="image/*" class="form-control" 
+             [ngClass]="{'is-invalid': (productoForm.get('fotos')?.invalid && productoForm.get('fotos')?.touched) || (fotos.length < 4 && productoForm.get('fotos')?.touched)}">
+      <div class="invalid-feedback">
+        Se requieren al menos 4 fotos.
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="productoForm.invalid || fotos.length < 4">Registrar Producto</button>
+  </form>
+</div>
 
     </div>
 

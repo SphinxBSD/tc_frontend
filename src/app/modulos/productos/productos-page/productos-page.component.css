@@ -4,3 +4,10 @@
 .row {
     margin: 2%;
 }
+
+.carousel-inner img {
+    width: 100%; /* Esto asegura que la imagen ocupe el ancho completo del contenedor */
+    height: 400px; /* Puedes ajustar esta altura según tus necesidades */
+    object-fit: cover; /* Esto asegurará que la imagen se recorte para encajar en el contenedor */
+  }
+  

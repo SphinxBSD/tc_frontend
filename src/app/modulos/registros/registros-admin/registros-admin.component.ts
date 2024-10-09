@@ -132,6 +132,13 @@ export class RegistrosAdminComponent {
         // Aquí puedes añadir lógica adicional, como redirigir o mostrar un mensaje de éxito
       },
       error: (err: any) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al registrar la comunidad",
+          showConfirmButton: false,
+          timer: 2000
+        });
         console.error('Error al registrar la comunidad', err);
         // Manejo del error, como mostrar un mensaje al usuario
       },

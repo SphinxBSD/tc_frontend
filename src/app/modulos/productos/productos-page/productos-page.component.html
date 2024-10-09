@@ -1,7 +1,7 @@
 <div class="body">
     <app-header></app-header>
     <!-- Sección de productos más solicitados -->
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-md-4">
           <div class="card">
             <img src="assets/images/prod2.jpg" class="card-img-top" alt="Producto">
@@ -32,6 +32,67 @@
             </div>
           </div>
         </div>
+      </div> -->
+    <!-- src/app/components/lista-productos/lista-productos.component.html -->
+<!-- src/app/components/lista-productos/lista-productos.component.html -->
+<div class="container mt-5">
+  <h2 class="mb-4">Lista de Productos</h2>
+
+  <!-- Filtros -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <label for="categoria" class="form-label">Filtrar por Categoría</label>
+      <select id="categoria" class="form-select" [(ngModel)]="selectedCategoria" (change)="onFiltroChange()">
+        <option value="">Todas las Categorías</option>
+        <option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">{{ categoria.nombre }}</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="elaboracion" class="form-label">Filtrar por Tipo de Elaboración</label>
+      <select id="elaboracion" class="form-select" [(ngModel)]="selectedElaboracion" (change)="onFiltroChange()">
+        <option value="">Todos los Tipos de Elaboración</option>
+        <option *ngFor="let elaboracion of elaboraciones" [value]="elaboracion.id_elaboracion">{{ elaboracion.tipo }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Lista de Productos -->
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let producto of productos">
+      <div class="card h-100">
+        <!-- Carrusel de Imágenes -->
+        <div id="carousel{{producto.id_producto}}" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item" *ngFor="let foto of producto.fotos; let i = index" [class.active]="i === 0">
+              <!-- <h2>{{foto}}</h2> -->
+              <img [src]="foto" class="d-block w-100" alt="Foto del producto">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" [attr.data-bs-target]="'#carousel' + producto.id_producto" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+          </button>
+          <button class="carousel-control-next" type="button" [attr.data-bs-target]="'#carousel' + producto.id_producto" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+          </button>
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title">{{ producto.nombre_producto }}</h5>
+          <p class="card-text">{{ producto.descripcion }}</p>
+          <p class="card-text"><strong>Precio:</strong> Bs{{ producto.precio }}</p>
+          <p class="card-text"><strong>Categoría:</strong> {{ producto.categoria }}</p>
+          <p class="card-text"><strong>Tipo de Elaboración:</strong> {{ producto.elaboracion }}</p>
+          <p class="card-text" *ngIf="producto.promo_descripcion">
+            <strong>Promoción:</strong> {{ producto.promo_descripcion }} - {{ producto.promo_descuento }}%
+          </p>
+        </div>
       </div>
-<app-footer></app-footer>
+    </div>
+  </div>
+</div>
+
+
+    <app-footer></app-footer>
 </div>
