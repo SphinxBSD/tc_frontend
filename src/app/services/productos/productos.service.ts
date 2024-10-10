@@ -26,6 +26,10 @@ export class ProductosService {
     return this.http.get<any[]>(this.apiUrl+'/productos/mostrar', { params });
   }
 
+  getProductosByUser(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl+'/productos/mostrarByUser');
+  }
+
   registrarProducto(formData: FormData): Observable<any> {
     return this.http.post(this.apiUrl + '/productos/registrar', formData);
   }

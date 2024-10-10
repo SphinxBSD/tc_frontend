@@ -117,3 +117,10 @@ tr {
 tbody tr:hover {
   background-color: #f09c00;
 }
+
+.buttons-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 20px 0;
+}

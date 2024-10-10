@@ -5,7 +5,7 @@
                 <h2 class="label">Registro Productos</h2>
                 <!-- Imagen para registrar Empresa -->
                 <div class="my-3">
-                  <a (click)="mostrarFormulario('productos')">
+                  <a (click)="showOpciones()">
                     <img
                       src="assets/images/prod1.jpeg"
                       alt="Registro de Empresa"
@@ -28,6 +28,18 @@
         }
       
     </div>
+
+    @if (this.opciones) {
+      <div>
+        <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
+        <h3>Que operacion desea realizar?</h3>
+        <div class="buttons-display">
+          <button type="button" class="btn btn-warning mt-3" (click)="mostrarFormulario('productos')">Crear</button>
+          <button type="button" class="btn btn-warning mt-3" (click)="mostrarFormulario('listarP')">Ver productos</button>
+        </div>
+      </div>
+    }
+    
 
     <div *ngIf="formularioActual === 'productos'" class="mt-5">
         <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
@@ -176,6 +188,48 @@
       }
 
     </div>
+
+    <div *ngIf="formularioActual === 'listarP'" class="mt-5">
+      <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
+      <!-- src/app/components/registrar-producto/registrar-producto.component.html -->
+      <div class="container">
+        <h2>Mis Productos</h2>
+        
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <!-- <th>ID</th> -->
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Precio</th>
+              <th>Categoría</th>
+              <th>Elaboración</th>
+              <!-- <th>Fotos</th> -->
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of productos">
+              <!-- <td>{{ product.id_producto }}</td> -->
+              <td>{{ product.nombre_producto }}</td>
+              <td>{{ product.descripcion }}</td>
+              <td>{{ product.precio | currency }}</td>
+              <td>{{ product.categoria }}</td>
+              <td>{{ product.elaboracion }}</td>
+              <!-- <td>
+                <img *ngFor="let foto of product.fotos" [src]="foto" alt="Foto del producto" class="img-thumbnail" width="50">
+              </td> -->
+              <td>
+                <button class="btn btn-warning btn-sm" (click)="editProduct(product.id_producto)">Editar</button>
+                <button class="btn btn-danger btn-sm" (click)="deleteProduct(product.id_producto)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+
+  </div>
 </div>
 
 <!-- Modal -->

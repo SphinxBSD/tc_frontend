@@ -39,6 +39,7 @@ export class RegistrosArtesanoComponent implements OnInit {
   sendSuccess: string = '';
   hideButtons: boolean = false;
   formularioActual: string | null = null;
+  opciones:boolean = false;
 
   hasComunidad: boolean = false;
 
@@ -47,6 +48,7 @@ export class RegistrosArtesanoComponent implements OnInit {
   categorias: any[] = [];
   elaboraciones: any[] = [];
   promos: any[] = [];
+  productos: any[] = [];
   //comunidades: any[] = []; // Para el registro de artesano
 
   constructor(
@@ -73,7 +75,23 @@ export class RegistrosArtesanoComponent implements OnInit {
     this.productosService.getElaboraciones().subscribe(data => this.elaboraciones = data);
     console.log('Categorías:', this.categorias);
     console.log('Elaboraciones:', this.elaboraciones);
+    this.getProducts();
   }
+
+    // Obtener productos
+    getProducts(): void {
+      this.productosService.getProductosByUser().subscribe(
+        {
+          next: (data) => {
+            this.productos = data;
+            console.log('Productos:', data);
+          },
+          error: (error) => {
+            console.error('Error al obtener productos:', error);
+          }
+        }
+      );
+    }
 
   mostrarFormulario(tipo: string) {
     //Buscar si el usuario tiene ya una comunidad registrada
@@ -85,11 +103,18 @@ export class RegistrosArtesanoComponent implements OnInit {
     }
     this.formularioActual = tipo;
     this.hideButtons = true;
+    this.opciones = false;
+  }
+
+  showOpciones(){
+    this.opciones = true;
+    this.hideButtons = true;
   }
 
   showButtons(){
     this.hideButtons = false;
     this.formularioActual = null;
+    this.opciones = false;
   }
 
   buscarComunidad(){
@@ -263,5 +288,16 @@ export class RegistrosArtesanoComponent implements OnInit {
       this.productosService.registrarProducto(formData).subscribe(productosObserver);
 
     }
+
+      // Método para las opciones de edición o eliminación
+  editProduct(id_producto: number): void {
+    console.log('Editar producto:', id_producto);
+    // Implementar lógica de edición
+  }
+
+  deleteProduct(id_producto: number): void {
+    console.log('Eliminar producto:', id_producto);
+    // Implementar lógica de eliminación
+  }
   
 }
