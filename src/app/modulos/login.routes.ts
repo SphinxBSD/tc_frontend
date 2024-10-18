@@ -7,6 +7,7 @@ import { AuthGuard } from '../guards/auth.guard';
 import { UsuariosAdministradorComponent } from "./usuarios/usuarios-administrador/usuarios-administrador.component";
 import { UsuariosArtesanoComponent } from "./usuarios/usuarios-artesano/usuarios-artesano.component";
 import { ProductosPageComponent } from "./productos/productos-page/productos-page.component";
+import { AboutComponent } from "./aboutus/about/about.component";
 
 export const routes: Routes = [
     {
@@ -42,6 +43,10 @@ export const routes: Routes = [
     {
         path: 'productos',
         component: ProductosPageComponent,
+    },
+    {
+        path: 'aboutus',
+        component: AboutComponent,
     },
     {
         path: '**',

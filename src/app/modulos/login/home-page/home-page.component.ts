@@ -5,6 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Usuario } from '../../../models/usuario.model';
 import { UserService } from '../../../services/user/user.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
