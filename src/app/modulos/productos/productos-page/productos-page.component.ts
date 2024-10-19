@@ -5,7 +5,10 @@ import { ProductosService } from '../../../services/productos/productos.service'
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import { CompradorService } from '../../../services/comprador/comprador.service';
+import { CarritoService } from '../../../services/carrito/carrito.service';
+import { Producto } from '../../../models/producto.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-productos-page',
@@ -27,8 +30,14 @@ export class ProductosPageComponent implements OnInit {
   elaboraciones: any[] = [];
   selectedCategoria: string = '';
   selectedElaboracion: string = '';
+  cantidadSeleccionada: { [key: number]: number } = {}; // Para manejar la cantidad seleccionada por producto
+
 http: any;
-  constructor(private productosService: ProductosService) { }
+  constructor(
+    private productosService: ProductosService, 
+    private compradorService: CompradorService,
+    private carritoService: CarritoService
+  ) { }
 
   ngOnInit(): void {
     this.cargarFiltros();
@@ -65,6 +74,34 @@ http: any;
 
   onFiltroChange(): void {
     this.cargarProductos();
+  }
+
+  agregarAlCarrito(producto: Producto): void {
+    const cantidad = this.cantidadSeleccionada[producto.id_producto] || 1;
+    // console.log('Agregando al carrito:', producto);
+    // console.log('Cantidad:', cantidad);
+    this.carritoService.agregarProductoCarrito(producto.id_producto, cantidad).subscribe(
+      {
+        next: (response) => {
+          console.log('Producto agregado al carrito:', response);
+          Swal.fire({
+            title: 'Producto agregado al carrito',
+            text: 'El producto se ha agregado al carrito de compras',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+          });
+        },
+        error: (error) => {
+          console.error('Error al agregar producto al carrito:', error);
+          Swal.fire({
+            title: 'Error al agregar producto al carrito',
+            text: 'Ha ocurrido un error al agregar el producto al carrito de compras',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+        }
+      }
+    );
   }
 
 

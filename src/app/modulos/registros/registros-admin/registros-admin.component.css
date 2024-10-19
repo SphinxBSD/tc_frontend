@@ -1,4 +1,7 @@
 img {
+  width: 30em;
+  height: 10em;
+  border-radius: 1em;
     cursor: pointer;
     transition: transform 0.3s;
   }

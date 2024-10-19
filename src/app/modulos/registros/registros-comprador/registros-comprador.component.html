@@ -1,0 +1,52 @@
+
+<div class="container">
+    <div class="row justify-content-center">
+        @if(!this.hideButtons){
+            <div class="col-md-10">
+                <h2 class="label">Historial de compras</h2>
+                <!-- Imagen para registrar Empresa -->
+                <div class="my-3">
+                  <a (click)="mostrarFormulario('historial')">
+                    <img
+                      src="assets/images/empresa1.png"
+                      alt="Registro de Artesano"
+                      class="img-fluid"
+                    />
+                  </a>
+                </div>
+                <!-- Imagen para registrar Comunidad -->
+                <h2 class="label">Carrito de compra</h2>
+                <div class="my-3">
+                  <a (click)="mostrarFormulario('carrito')">
+                    <img
+                      src="assets/images/carritocompra2.jpg"
+                      alt="Registro de Comunidad"
+                      class="img-fluid"
+                    />
+                  </a>
+                </div>
+              </div>
+        }
+    </div>
+</div>
+
+<!-- FORMULARIO DEL CARRITO DE COMPRAS -->
+<div *ngIf="formularioActual === 'carrito'" class="container mt-5">
+    <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
+    <h2>Mi Carrito</h2>
+    <div *ngIf="productosCarrito.length === 0" class="alert alert-info">Tu carrito está vacío</div>
+    <div *ngIf="productosCarrito.length > 0">
+        <ul class="list-group mb-4">
+        <li class="list-group-item" *ngFor="let producto of productosCarrito">
+            <img [src]="producto.fotos[0]" alt="Imagen" class="img-thumbnail mr-3" style="width: 50px;">
+            {{ producto.nombre_producto }} - ${{ producto.precio }} (Cantidad: {{ producto.cantidad }})
+        </li>
+        </ul>
+        <button class="btn btn-success" (click)="confirmarCompra()">Confirmar Compra</button>
+    </div>
+</div>
+
+<!-- FORMULARIO DE HISTORIAL DE COMPRAS -->
+<div *ngIf="formularioActual === 'historial'" class="container mt-5">
+    <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
+</div>

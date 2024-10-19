@@ -8,6 +8,7 @@ import { UsuariosAdministradorComponent } from "./usuarios/usuarios-administrado
 import { UsuariosArtesanoComponent } from "./usuarios/usuarios-artesano/usuarios-artesano.component";
 import { ProductosPageComponent } from "./productos/productos-page/productos-page.component";
 import { AboutComponent } from "./aboutus/about/about.component";
+import { UsuariosCompradorComponent } from "./usuarios/usuarios-comprador/usuarios-comprador.component";
 
 export const routes: Routes = [
     {
@@ -39,6 +40,10 @@ export const routes: Routes = [
         path: 'artesano',
         component: UsuariosArtesanoComponent,
         canActivate: [AuthGuard]
+    },
+    {
+        path: 'comprador',
+        component: UsuariosCompradorComponent,
     },
     {
         path: 'productos',

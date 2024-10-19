@@ -75,7 +75,7 @@ export class RegistrosArtesanoComponent implements OnInit {
     this.productosService.getElaboraciones().subscribe(data => this.elaboraciones = data);
     console.log('Categorías:', this.categorias);
     console.log('Elaboraciones:', this.elaboraciones);
-    this.getProducts();
+    // this.getProducts();
   }
 
     // Obtener productos
@@ -100,6 +100,9 @@ export class RegistrosArtesanoComponent implements OnInit {
         this.fetchComunidades();
       }
       
+    }
+    if (tipo==='listarP'){
+      this.getProducts();
     }
     this.formularioActual = tipo;
     this.hideButtons = true;
