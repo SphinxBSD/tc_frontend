@@ -1,0 +1,28 @@
+/* components/comunidad-list/comunidad-list.component.css */
+
+.container {
+    margin: 2%;
+}
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .card-header {
+    background-color: #f8f9fa;
+  }
+  
+  .card-body ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .card-body li {
+    margin-bottom: 5px;
+  }
+
+.header {
+    background-color: #9b7d5e;
+    color: white;
+}

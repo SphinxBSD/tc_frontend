@@ -21,4 +21,14 @@ export class UserService {
   updateUserProfile(user: Usuario): Observable<any> {
     return this.http.put(`${this.apiUrl}/users/setprofile`, user);
   }
+
+  // Obtener todos los usuarios
+  getUsuarios(): Observable<any> {
+    return this.http.get(this.apiUrl+'/users/usuarios');
+  }
+
+  // Eliminar un usuario por id
+  deleteUsuario(id_usuario: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/users/usuarios/${id_usuario}`);
+  }
 }

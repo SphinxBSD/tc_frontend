@@ -49,4 +49,8 @@ export class ComunidadService {
     const payload = { id_comunidad, id_solicitante };
     return this.http.post<any>(`${this.apiUrl}/comunidad/approve-request`, payload);
   }
+
+  getComunidadesConArtesanos(): Observable<any> {
+    return this.http.get(this.apiUrl + '/comunidad/infocomunidades');
+  }
 }

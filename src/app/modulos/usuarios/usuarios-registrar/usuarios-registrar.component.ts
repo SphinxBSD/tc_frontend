@@ -42,7 +42,8 @@ export class UsuariosRegistrarComponent implements OnInit {
   roles = [
     { id: 1, name: 'Encargado' },
     { id: 2, name: 'Comprador' },
-    { id: 3, name: 'Artesano' }
+    { id: 3, name: 'Artesano' },
+    { id: 4, name: 'Administrador' }
   ];
 
   errorMessage = '';

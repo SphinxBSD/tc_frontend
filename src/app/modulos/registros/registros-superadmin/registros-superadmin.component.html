@@ -1,0 +1,79 @@
+<div class="container">
+    
+    <div class="row justify-content-center">
+        @if(!this.hideButtons){
+            <div class="col-md-10">
+                <h2 class="label">Administrar usuarios</h2>
+                <!-- Imagen para registrar Empresa -->
+                <div class="my-3">
+                  <a (click)="mostrarFormulario('usuarios')">
+                    <img
+                      src="assets/images/usersmgnt.png"
+                      alt="Registro de Artesano"
+                      class="img-fluid"
+                    />
+                  </a>
+                </div>
+                <!-- Imagen para registrar Comunidad -->
+                <h2 class="label">Administrar delivery</h2>
+                <div class="my-3">
+                  <a (click)="showOpciones()">
+                    <img
+                      src="assets/images/delivery.jpg"
+                      alt="Registro de Comunidad"
+                      class="img-fluid"
+                    />
+                  </a>
+                </div>
+              </div>
+        }
+      
+    </div>
+
+    @if (this.opciones) {
+        <div>
+          <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
+          <h3>Que operacion desea realizar?</h3>
+          <div class="buttons-display">
+            <button type="button" class="btn btn-warning mt-3" (click)="mostrarFormulario('productos')">Crear delivery</button>
+            <button type="button" class="btn btn-warning mt-3" (click)="mostrarFormulario('listarP')">Asignar delivery</button>
+          </div>
+        </div>
+      }
+  
+    <!-- Formulario para registrar Artesano -->
+    <div *ngIf="formularioActual === 'usuarios'" class="mt-5">
+        <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
+        <h3>Listado de Usuarios</h3>
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nombre Completo</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let usuario of usuarios">
+                <td>{{ usuario.nombre }} {{ usuario.paterno }} {{ usuario.materno }}</td>
+                <td>{{ usuario.username }}</td>
+                <td>{{ usuario.email }}</td>
+                <td>
+                  <button class="btn btn-danger" (click)="deleteUsuario(usuario.id_usuario)">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+         
+    </div>
+  
+    <!-- Formulario para registrar Comunidad -->
+    <div *ngIf="formularioActual === 'deliverys'" class="mt-5">
+        <button type="button" class="btn btn-warning mt-3" (click)="showButtons()" >Volver</button>
+      <h3 class="label">Formulario de Registro de Comunidad</h3>
+    </div>
+  </div>
+  

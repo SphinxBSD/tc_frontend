@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header [usuarioRol]="usuarioRol"></app-header>
 
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
@@ -6,7 +6,7 @@
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <strong><a class="nav-link" aria-current="page" href="#">Eventos</a></strong>
+              <strong><a class="nav-link" routerLink="/auth/comunidades">Comunidades</a></strong>
             </li>
             <li class="nav-item">
               <strong><a class="nav-link" routerLink="/auth/productos">Productos</a></strong>
@@ -49,7 +49,7 @@
     </div>
   
     <!-- Sección de productos más solicitados -->
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-4">
         <div class="card">
           <img src="assets/images/prod3.jpg" class="card-img-top" alt="Producto">
@@ -80,7 +80,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
   
 <app-footer></app-footer>

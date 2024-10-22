@@ -9,6 +9,8 @@ import { UsuariosArtesanoComponent } from "./usuarios/usuarios-artesano/usuarios
 import { ProductosPageComponent } from "./productos/productos-page/productos-page.component";
 import { AboutComponent } from "./aboutus/about/about.component";
 import { UsuariosCompradorComponent } from "./usuarios/usuarios-comprador/usuarios-comprador.component";
+import { ComunidadesComponent } from "./comunidades/comunidades/comunidades.component";
+import { UsuariosSuperadminComponent } from "./usuarios/usuarios-superadmin/usuarios-superadmin.component";
 
 export const routes: Routes = [
     {
@@ -52,6 +54,14 @@ export const routes: Routes = [
     {
         path: 'aboutus',
         component: AboutComponent,
+    },
+    {
+        path: 'comunidades',
+        component: ComunidadesComponent,
+    },
+    {
+        path: 'superadmin',
+        component: UsuariosSuperadminComponent,
     },
     {
         path: '**',

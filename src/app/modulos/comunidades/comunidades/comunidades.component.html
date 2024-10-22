@@ -1,0 +1,20 @@
+<!-- components/comunidad-list/comunidad-list.component.html -->
+<app-header></app-header>
+<div class="container">
+    <div *ngFor="let comunidad of comunidades" class="card mb-3">
+      <div class="card-header header">
+        <h5> <strong>Comunidad: </strong> {{ comunidad.nombre }}</h5>
+        <small><strong>Departamento: </strong>{{ comunidad.departamento }}, <strong>Provincia: </strong>{{ comunidad.provincia }}, <strong>Municipio: </strong>{{ comunidad.municipio }}</small>
+      </div>
+      <div class="card-body">
+        <p>PDF: <a [href]="comunidad.pdf_url" target="_blank">{{ comunidad.pdf_url }}</a></p>
+        <h6>Artesanos:</h6>
+        <ul>
+          <li *ngFor="let artesano of comunidad.artesanos">
+            {{ artesano.nombre }} {{ artesano.paterno }} {{ artesano.materno }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<app-footer></app-footer>

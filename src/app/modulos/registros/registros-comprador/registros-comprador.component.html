@@ -10,7 +10,7 @@
                     <img
                       src="assets/images/empresa1.png"
                       alt="Registro de Artesano"
-                      class="img-fluid"
+                      class="img-fluid img-link"
                     />
                   </a>
                 </div>
@@ -21,7 +21,7 @@
                     <img
                       src="assets/images/carritocompra2.jpg"
                       alt="Registro de Comunidad"
-                      class="img-fluid"
+                      class="img-fluid img-link"
                     />
                   </a>
                 </div>
@@ -32,7 +32,65 @@
 
 <!-- FORMULARIO DEL CARRITO DE COMPRAS -->
 <div *ngIf="formularioActual === 'carrito'" class="container mt-5">
-    <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
+
+  <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
+
+  <div *ngIf="productosCarrito.length === 0" class="alert alert-info">Tu carrito está vacío</div>
+  <div *ngIf="productosCarrito.length > 0" class="container mt-4">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="text-center">Carrito de Compras</h2>
+        <table class="table table-striped table-hover mt-3">
+          <thead class="table-dark">
+            <tr>
+              <th>Producto</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+              <th>Fotos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of productosCarrito">
+              <td>{{ item.nombre_producto }}</td>
+              <td>{{ item.precio + ' Bs' }}</td>
+              <td>{{ item.cantidad }}</td>
+              <td>{{ item.cantidad * item.precio + ' Bs' }}</td>
+              <td>
+                <!-- Carousel de imágenes -->
+                <div id="carousel{{ item.id_producto }}" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-inner">
+                    <div *ngFor="let foto of item.fotos; let i = index" class="carousel-item" [class.active]="i === 0">
+                      <img [src]="foto" class="d-block w-100 img-thumbnail" alt="foto producto" style="max-width: 150px; height: 150px;">
+                    </div>
+                  </div>
+                  <!-- Controles de siguiente/anterior -->
+                  <button class="carousel-control-prev" type="button" [attr.data-bs-target]="'#carousel' + item.id_producto" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" [attr.data-bs-target]="'#carousel' + item.id_producto" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- Mostrar el total del carrito -->
+      <div *ngIf="productosCarrito.length > 0" class="text-end mt-3">
+        <h4>Total del Carrito: {{ total + ' Bs' }}</h4>
+        <button class="btn btn-success" (click)="confirmarCompra()">Confirmar Compra</button>
+        <br>
+      </div>
+      <br>
+      </div>
+    </div>
+  </div>
+  
+  
+    <!-- 
     <h2>Mi Carrito</h2>
     <div *ngIf="productosCarrito.length === 0" class="alert alert-info">Tu carrito está vacío</div>
     <div *ngIf="productosCarrito.length > 0">
@@ -42,11 +100,44 @@
             {{ producto.nombre_producto }} - ${{ producto.precio }} (Cantidad: {{ producto.cantidad }})
         </li>
         </ul>
-        <button class="btn btn-success" (click)="confirmarCompra()">Confirmar Compra</button>
-    </div>
+        
+    </div> -->
 </div>
 
 <!-- FORMULARIO DE HISTORIAL DE COMPRAS -->
 <div *ngIf="formularioActual === 'historial'" class="container mt-5">
     <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
+    <h2>Historial de Compras</h2>
+
+  <div *ngIf="historial.length > 0; else noCompras">
+    <div *ngFor="let pedido of historial" class="card mb-3">
+      <div class="card-header">
+        <strong>Pedido #{{ pedido.id_pedido }}</strong> - Fecha: {{ pedido.fecha_pedido | date:'short' }} - Total: {{ pedido.total | currency }}
+      </div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio Unitario</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let producto of pedido.productos">
+              <td>{{ producto.nombre_producto }}</td>
+              <td>{{ producto.cantidad }}</td>
+              <td>{{ producto.precio_unitario | currency }}</td>
+              <td>{{ producto.cantidad * producto.precio_unitario | currency }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noCompras>
+    <div class="alert alert-info">No has realizado ninguna compra todavía.</div>
+  </ng-template>
 </div>

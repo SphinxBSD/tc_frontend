@@ -1,4 +1,4 @@
-img {
+.img-link {
     width: 30em;
     height: 10em;
     border-radius: 1em;
@@ -6,10 +6,31 @@ img {
     transition: transform 0.3s;
   }
   
-  img:hover {
+  .img-link:hover {
     transform: scale(1.05);
   }
 
 .container{
     text-align: center;
+}
+
+table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.carousel-inner img {
+  max-width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+}
+
+.card {
+  margin-bottom: 20px;
 }
