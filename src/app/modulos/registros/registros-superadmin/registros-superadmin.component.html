@@ -35,8 +35,8 @@
           <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
           <h3>Que operacion desea realizar?</h3>
           <div class="buttons-display">
-            <button type="button" class="btn btn-warning mt-3" (click)="mostrarFormulario('productos')">Crear delivery</button>
-            <button type="button" class="btn btn-warning mt-3" (click)="mostrarFormulario('listarP')">Asignar delivery</button>
+            <button type="button" class="btn btn-warning mt-3" (click)="mostrarFormulario('aprobarD')">Aprobar delivery</button>
+            <button type="button" class="btn btn-warning mt-3" (click)="mostrarFormulario('listarD')">Ver deliverys</button>
           </div>
         </div>
       }
@@ -71,9 +71,37 @@
     </div>
   
     <!-- Formulario para registrar Comunidad -->
-    <div *ngIf="formularioActual === 'deliverys'" class="mt-5">
+    <div *ngIf="formularioActual === 'aprobarD'" class="mt-5">
         <button type="button" class="btn btn-warning mt-3" (click)="showButtons()" >Volver</button>
-      <h3 class="label">Formulario de Registro de Comunidad</h3>
+      
+      <h3>Listado de Deliverys</h3>
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nombre Completo</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let usuario of usuariosDelivery">
+                <td>{{ usuario.nombre }} {{ usuario.paterno }} {{ usuario.materno }}</td>
+                <td>{{ usuario.username }}</td>
+                <td>{{ usuario.email }}</td>
+                <td>
+                  <!-- <button class="btn btn-success" (click)="createDelivery(usuario.id_usuario)">Aprobar</button> -->
+                  <button (click)="createDelivery(usuario.id_usuario)" class="btn btn-primary">
+                    Crear Delivery
+                  </button>
+                  <button class="btn btn-danger" (click)="deleteUsuario(usuario.id_usuario)">Eliminar</button>
+                </td>
+                
+              </tr>
+            </tbody>
+          </table>
+        </div>
     </div>
   </div>
   

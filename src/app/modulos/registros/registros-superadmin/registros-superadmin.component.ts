@@ -22,11 +22,15 @@ export class RegistrosSuperadminComponent {
   opciones:boolean = false;
 
   usuarios: any[] = [];
+  usuariosDelivery: any[] = [];
+
+  deliveries: any[] = [];
 
   constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit(): void {
     this.loadUsuarios();
+    this.loadDeliveries();
   }
 
   // Cargar lista de usuarios
@@ -40,6 +44,18 @@ export class RegistrosSuperadminComponent {
       }
     });
   }
+
+    // Cargar lista de usuarios
+    loadDeliverys(): void {
+      this.userService.getDelivery().subscribe({
+        next: (data) => {
+          this.usuariosDelivery = data;
+        },
+        error: (error) => {
+          console.error('Error al obtener los usuarios delivery:', error);
+        }
+      });
+    }
 
   // Eliminar usuario
   deleteUsuario(id_usuario: number): void {
@@ -62,8 +78,8 @@ export class RegistrosSuperadminComponent {
       
       
     }
-    if (tipo==='deliverys'){
-      
+    if (tipo==='aprobarD'){
+      this.loadDeliverys();
     }
     this.formularioActual = tipo;
     this.hideButtons = true;
@@ -79,5 +95,28 @@ export class RegistrosSuperadminComponent {
   showOpciones(){
     this.opciones = true;
     this.hideButtons = true;
+  }
+
+  createDelivery(id_usuario: number): void {
+    this.userService.createDelivery(id_usuario).subscribe(
+      (response) => {
+        alert('Delivery creado exitosamente');
+        this.loadDeliveries(); // Recargar la lista
+      },
+      (error) => {
+        console.error('Error al crear delivery', error);
+      }
+    );
+  }
+
+  loadDeliveries(): void {
+    this.userService.getDeliveries().subscribe(
+      (data) => {
+        this.deliveries = data;
+      },
+      (error) => {
+        console.error('Error al cargar deliveries', error);
+      }
+    );
   }
 }

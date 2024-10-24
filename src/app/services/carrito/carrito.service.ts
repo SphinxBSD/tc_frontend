@@ -20,4 +20,9 @@ export class CarritoService {
   listarProductosCarrito(): Observable<any> {
     return this.http.get(`${this.apiUrl}/carrito/listar`);
   }
+
+  // Eliminar producto del carrito
+  eliminarProducto(id_producto: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/carrito/eliminar/${id_producto}`);
+  }
 }

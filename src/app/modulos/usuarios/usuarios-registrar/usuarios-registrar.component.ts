@@ -43,7 +43,8 @@ export class UsuariosRegistrarComponent implements OnInit {
     { id: 1, name: 'Encargado' },
     { id: 2, name: 'Comprador' },
     { id: 3, name: 'Artesano' },
-    { id: 4, name: 'Administrador' }
+    { id: 4, name: 'Administrador' },
+    { id: 5, name: 'Delivery' }
   ];
 
   errorMessage = '';

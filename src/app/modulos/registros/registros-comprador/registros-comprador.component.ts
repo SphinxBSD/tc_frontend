@@ -58,6 +58,20 @@ export class RegistrosCompradorComponent {
     );
   }
 
+  // Eliminar producto del carrito
+  eliminarProducto(id_producto: number): void {
+    this.carritoService.eliminarProducto(id_producto).subscribe(
+      () => {
+        // Actualizar la vista después de eliminar el producto
+        this.productosCarrito = this.productosCarrito.filter(item => item.id_producto !== id_producto);
+        this.calcularTotal(); // Recalcular el total
+      },
+      (error) => {
+        console.error('Error al eliminar producto del carrito', error);
+      }
+    );
+  }
+
   confirmarCompra(): void {
     Swal.fire({
       title: 'Confirmar compra',
