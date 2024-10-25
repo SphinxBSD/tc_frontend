@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
   templateUrl: './registros-superadmin.component.html',
   styleUrl: './registros-superadmin.component.css'
 })
-export class RegistrosSuperadminComponent {
+export class RegistrosSuperadminComponent implements OnInit {
   hideButtons: boolean = false;
   formularioActual: string | null = null;
   error: string = '';
@@ -26,7 +26,20 @@ export class RegistrosSuperadminComponent {
 
   deliveries: any[] = [];
 
-  constructor(private router: Router, private userService: UserService) {}
+  isUpload: boolean = false;
+  selectedFile: File | null = null;
+  selectedFileName: string = '';
+  @ViewChild('documento', { static: false }) fileInput!: ElementRef;
+
+  selectedUserId: number | null = null;
+
+  constructor(
+    private router: Router, 
+    private userService: UserService,
+    private fb: FormBuilder
+  ) {
+    
+  }
 
   ngOnInit(): void {
     this.loadUsuarios();
@@ -81,6 +94,10 @@ export class RegistrosSuperadminComponent {
     if (tipo==='aprobarD'){
       this.loadDeliverys();
     }
+
+    if (tipo === 'listarD') {
+      this.loadDeliveries()
+    }
     this.formularioActual = tipo;
     this.hideButtons = true;
     this.opciones = false;
@@ -98,25 +115,70 @@ export class RegistrosSuperadminComponent {
   }
 
   createDelivery(id_usuario: number): void {
-    this.userService.createDelivery(id_usuario).subscribe(
-      (response) => {
-        alert('Delivery creado exitosamente');
-        this.loadDeliveries(); // Recargar la lista
-      },
-      (error) => {
-        console.error('Error al crear delivery', error);
-      }
-    );
+
+    if (this.selectedFile && id_usuario) {
+      this.userService.createDelivery(id_usuario, this.selectedFile).subscribe(
+        {
+          next: (response) => {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Delivery creado con éxito',
+              showConfirmButton: false,
+              timer: 2500
+            });
+            this.loadDeliveries(); // Recargar la lista
+          },
+          error: (error) => {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: 'Error al crear delivery',
+              showConfirmButton: false,
+              timer: 2500
+            });
+            console.error('Error al crear el delivery', error);
+          }
+        }
+      );
+    } else {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'Error al crear delivery',
+        text: 'Debes subir el contrato de delivery',
+        showConfirmButton: false,
+        timer: 2500
+      });
+    }
   }
 
   loadDeliveries(): void {
     this.userService.getDeliveries().subscribe(
-      (data) => {
-        this.deliveries = data;
-      },
-      (error) => {
-        console.error('Error al cargar deliveries', error);
+      {
+        next: (data) => {
+          this.deliveries = data;
+          console.log('Deliveries cargados:', this.deliveries);
+        },
+        error: (error) => {
+          console.error('Error al cargar deliveries', error);
+        }
       }
+      
     );
+  }
+
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
+      this.selectedFileName = this.selectedFile.name; // Guarda el nombre del archivo para mostrarlo
+      this.isUpload = true;
+      console.log('Archivo seleccionado:', this.selectedFileName);
+    }
+    
+  }
+
+  triggerFileInput(): void {
+    this.fileInput.nativeElement.click();
   }
 }

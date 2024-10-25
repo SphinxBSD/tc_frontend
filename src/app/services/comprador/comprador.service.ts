@@ -12,7 +12,7 @@ export class CompradorService {
   constructor(private http: HttpClient) { }
 
   // Confirmar compra
-  confirmarCompra(): Observable<any> {
+  confirmarPedido(): Observable<any> {
     return this.http.post(`${this.apiUrl}/comprador/comprar`, {});
   }
   

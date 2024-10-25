@@ -25,6 +25,17 @@
                     />
                   </a>
                 </div>
+                <!-- Imagen para administrar los pedidos -->
+                <h2 class="label">Administrar pedidos</h2>
+                <div class="my-3">
+                  <a (click)="showOpciones()">
+                    <img
+                      src="assets/images/pedidosadm.png"
+                      alt="Registro de Comunidad"
+                      class="img-fluid"
+                    />
+                  </a>
+                </div>
               </div>
         }
       
@@ -82,6 +93,7 @@
                 <th>Nombre Completo</th>
                 <th>Username</th>
                 <th>Email</th>
+                <th>Contrato</th>
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -91,10 +103,22 @@
                 <td>{{ usuario.username }}</td>
                 <td>{{ usuario.email }}</td>
                 <td>
-                  <!-- <button class="btn btn-success" (click)="createDelivery(usuario.id_usuario)">Aprobar</button> -->
-                  <button (click)="createDelivery(usuario.id_usuario)" class="btn btn-primary">
-                    Crear Delivery
-                  </button>
+                  @if(!isUpload){
+
+                    <p>Archivos soportados: PDF, DOCX</p>
+                    <input #documento id="documento" type="file" hidden accept=".doc,.docx,.pdf" (change)="onFileSelected($event)" style="display:none;">
+                    <button class="btn-file" (click)="triggerFileInput()">Subir contrato</button>
+              
+                    
+                  }@else {
+                    <div>
+                      <h3 style="color: rgb(2, 6, 8);">Archivo subido!</h3>
+                    </div>
+                  }
+                </td>
+                <td>
+                  <button class="btn btn-success" (click)="createDelivery(usuario.id_usuario)">Aprobar</button>
+                  
                   <button class="btn btn-danger" (click)="deleteUsuario(usuario.id_usuario)">Eliminar</button>
                 </td>
                 
@@ -103,5 +127,35 @@
           </table>
         </div>
     </div>
+
+
+    <!-- Tabla de deliverys contratados -->
+     <div *ngIf="formularioActual === 'listarD'" class="mt-5">
+      <button type="button" class="btn btn-warning mt-3" (click)="showButtons()" >Volver</button>
+      
+      <h3>Listado de Deliverys contratados</h3>
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Estado</th>
+                <th>Fecha inicio</th>
+                <!-- <th>Acciones</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let delivery of deliveries">
+                <td>{{ delivery.username }}</td>
+                <td>{{ delivery.estado }}</td>
+                <td>
+                  {{ delivery.fecha_inicio }}
+                </td>
+                
+              </tr>
+            </tbody>
+          </table>
+        </div>
+     </div>
   </div>
   

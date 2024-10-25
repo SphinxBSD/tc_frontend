@@ -38,13 +38,29 @@ export class UserService {
   }
 
 
-  // Crear un nuevo delivery para un usuario
-  createDelivery(id_usuario: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/users/delivery/${id_usuario}`, {});
+  // Crear un nuevo delivery con contrato
+  createDelivery(id_usuario: number, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('contract', file);
+    formData.append('id_usuario', id_usuario.toString());
+
+    return this.http.post(`${this.apiUrl}/users/create-delivery`, formData);
   }
 
   // Obtener la lista de usuarios con rol delivery
   getDeliveries(): Observable<any> {
     return this.http.get(`${this.apiUrl}/users/deliveries`);
+  }
+
+  getPedidos(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/users/pedidos`);
+  }
+
+  confirmarEntrega(id_pedido: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/cambiar-estado-pedido`, { id_pedido, estado: 'entregado' });
+  }
+  
+  cancelarPedido(id_pedido: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/cambiar-estado-pedido`, { id_pedido, estado: 'cancelado' });
   }
 }

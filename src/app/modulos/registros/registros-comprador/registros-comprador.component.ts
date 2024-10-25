@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../../../services/carrito/carrito.service';
 import { CompradorService } from '../../../services/comprador/comprador.service';
 import { ProductosService } from '../../../services/productos/productos.service';
+import { UserService } from '../../../services/user/user.service';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 
@@ -26,13 +27,16 @@ export class RegistrosCompradorComponent {
 
   hideButtons: boolean = false;
 
+  pedidos: any[] = [];
+
   constructor(
     private carritoService: CarritoService,
-    private compradorService: CompradorService
+    private compradorService: CompradorService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
-    this.cargarHistorial();
+    
     this.listarProductosCarrito();
   }
 
@@ -72,7 +76,7 @@ export class RegistrosCompradorComponent {
     );
   }
 
-  confirmarCompra(): void {
+  confirmarPedido(): void {
     Swal.fire({
       title: 'Confirmar compra',
       // text: '¿Está seguro de que desea realizar la compra? Debe escanear el siguiente código QR para confirmar la compra',
@@ -89,7 +93,7 @@ export class RegistrosCompradorComponent {
               />`
     }).then((result) => {
       if (result.isConfirmed) {
-        this.compradorService.confirmarCompra().subscribe(
+        this.compradorService.confirmarPedido().subscribe(
           {
             next: (response) => {
               console.log('Compra realizada:', response);
@@ -112,7 +116,7 @@ export class RegistrosCompradorComponent {
     mostrarFormulario(tipo: string) {
 
       if (tipo === 'historial'){
-  
+        this.cargarHistorial(); // Cargar el historial de compras
         // Aquí puedes manejar la lógica para mostrar el formulario de registro de artesano
 
       }
@@ -122,6 +126,18 @@ export class RegistrosCompradorComponent {
         
         this.calcularTotal(); // Calcular el total cuando se añadan productos
         console.log('Total:', this.total);
+      }
+
+      if (tipo === 'pedidos') {
+        this.userService.getPedidos().subscribe({
+          next: (data) => {
+            this.pedidos = data;
+          },
+          error: (error) => {
+            console.error('Error al cargar los pedidos', error);
+          }
+        }
+        );
       }
       this.formularioActual = tipo;
       this.hideButtons = true;
@@ -137,6 +153,26 @@ export class RegistrosCompradorComponent {
     this.total = this.productosCarrito.reduce((acc: number, item: any) => {
       return acc + (item.precio * item.cantidad);
     }, 0);
+  }
+
+
+
+
+  confirmarEntrega(id_pedido: number): void {
+    this.userService.confirmarEntrega(id_pedido).subscribe(() => {
+      this.pedidos = this.pedidos.map(pedido => 
+        pedido.id_pedido === id_pedido ? { ...pedido, estado: 'entregado' } : pedido
+      );
+    });
+  }
+
+  cancelarPedido(id_pedido: number): void {
+    console.log('Cancelar pedido', id_pedido);
+    this.userService.cancelarPedido(id_pedido).subscribe(() => {
+      this.pedidos = this.pedidos.map(pedido => 
+        pedido.id_pedido === id_pedido ? { ...pedido, estado: 'cancelado' } : pedido
+      );
+    });
   }
 
 }

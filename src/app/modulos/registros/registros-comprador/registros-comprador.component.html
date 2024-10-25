@@ -3,6 +3,33 @@
     <div class="row justify-content-center">
         @if(!this.hideButtons){
             <div class="col-md-10">
+
+
+              <!-- Imagen para registrar Comunidad -->
+              <h2 class="label">Carrito de compra</h2>
+              <div class="my-3">
+                <a (click)="mostrarFormulario('carrito')">
+                  <img
+                    src="assets/images/carritocompra2.jpg"
+                    alt="Registro de Comunidad"
+                    class="img-fluid img-link"
+                  />
+                </a>
+              </div>
+
+              <h2 class="label">Seguimiento pedidos</h2>
+                <!-- Imagen para registrar Empresa -->
+                <div class="my-3">
+                  <a (click)="mostrarFormulario('pedidos')">
+                    <img
+                      src="assets/images/seguimiento.jpg"
+                      alt="Registro de Artesano"
+                      class="img-fluid img-link"
+                    />
+                  </a>
+                </div>
+
+
                 <h2 class="label">Historial de compras</h2>
                 <!-- Imagen para registrar Empresa -->
                 <div class="my-3">
@@ -14,17 +41,7 @@
                     />
                   </a>
                 </div>
-                <!-- Imagen para registrar Comunidad -->
-                <h2 class="label">Carrito de compra</h2>
-                <div class="my-3">
-                  <a (click)="mostrarFormulario('carrito')">
-                    <img
-                      src="assets/images/carritocompra2.jpg"
-                      alt="Registro de Comunidad"
-                      class="img-fluid img-link"
-                    />
-                  </a>
-                </div>
+                
               </div>
         }
     </div>
@@ -85,27 +102,13 @@
         <!-- Mostrar el total del carrito -->
       <div *ngIf="productosCarrito.length > 0" class="text-end mt-3">
         <h4>Total del Carrito: {{ total + ' Bs' }}</h4>
-        <button class="btn btn-success" (click)="confirmarCompra()">Confirmar Compra</button>
+        <button class="btn btn-success" (click)="confirmarPedido()">Confirmar Compra</button>
         <br>
       </div>
       <br>
       </div>
     </div>
   </div>
-  
-  
-    <!-- 
-    <h2>Mi Carrito</h2>
-    <div *ngIf="productosCarrito.length === 0" class="alert alert-info">Tu carrito está vacío</div>
-    <div *ngIf="productosCarrito.length > 0">
-        <ul class="list-group mb-4">
-        <li class="list-group-item" *ngFor="let producto of productosCarrito">
-            <img [src]="producto.fotos[0]" alt="Imagen" class="img-thumbnail mr-3" style="width: 50px;">
-            {{ producto.nombre_producto }} - ${{ producto.precio }} (Cantidad: {{ producto.cantidad }})
-        </li>
-        </ul>
-        
-    </div> -->
 </div>
 
 <!-- FORMULARIO DE HISTORIAL DE COMPRAS -->
@@ -144,4 +147,46 @@
   <ng-template #noCompras>
     <div class="alert alert-info">No has realizado ninguna compra todavía.</div>
   </ng-template>
+</div>
+
+<!-- LISTADO DE SEGUIMIENTO DE PEDIDOS -->
+<div *ngIf="formularioActual === 'pedidos'" class="container mt-5">
+  <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
+    
+  <div class="container">
+    <h2 class="my-4">Seguimiento de Pedidos</h2>
+    <table class="table table-striped" style="background-color: rgb(221, 187, 113);">
+      <thead class="thead-dark">
+        <tr>
+          <th>Producto</th>
+          <th>Precion unit.</th>
+          <th>Cantidad</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pedido of pedidos">
+          <td>{{ pedido.nombre_producto }}</td>
+          <td>{{ pedido.precio_unitario}}</td>
+          <td>{{ pedido.cantidad }}</td>
+          <td>
+            <span 
+              [ngClass]="{
+                'badge badge-warning': pedido.estado === 'encurso',
+                'badge badge-success': pedido.estado === 'entregado',
+                'badge badge-primary': pedido.estado === 'asignado',
+                'badge badge-secondary': pedido.estado === 'porasignar'
+              }">
+              {{ pedido.estado }}
+            </span>
+          </td>
+          <td>
+            <button *ngIf="pedido.estado === 'encurso'" (click)="confirmarEntrega(pedido.id_pedido)" class="btn btn-sm btn-success">Confirmar Entrega</button>
+            <button *ngIf="pedido.estado === 'porasignar' || pedido.estado=== 'asignado'" (click)="cancelarPedido(pedido.id_pedido)" class="btn btn-sm btn-danger">Cancelar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

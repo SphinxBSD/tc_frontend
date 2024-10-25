@@ -15,11 +15,6 @@ export class ComunidadService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   registrarComunidad(formData: FormData): Observable<any> {
-    // const token = this.authService.getToken(); // Método para obtener el token de las cookies
-    // const headers = new HttpHeaders({
-    //   'Authorization': `Bearer ${token}`
-    // });
-
     return this.http.post(this.apiUrl + '/comunidad/registrar', formData);
   }
 
