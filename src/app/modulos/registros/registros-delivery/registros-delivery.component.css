@@ -1,0 +1,20 @@
+.img-link {
+    width: 30em;
+    height: 10em;
+    border-radius: 1em;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  
+  .img-link:hover {
+    transform: scale(1.05);
+  }
+
+.container{
+    text-align: center;
+}
+
+table {
+  border-radius: 10px;
+  overflow: hidden;
+}

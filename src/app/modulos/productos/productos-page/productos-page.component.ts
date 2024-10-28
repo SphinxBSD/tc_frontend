@@ -3,12 +3,22 @@ import { FooterComponent } from '../../../shared/footer/footer.component';
 import { HeaderComponent } from '../../../shared/header/header.component';
 import { ProductosService } from '../../../services/productos/productos.service';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CompradorService } from '../../../services/comprador/comprador.service';
 import { CarritoService } from '../../../services/carrito/carrito.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { Producto } from '../../../models/producto.model';
 import Swal from 'sweetalert2';
+
+import { ReviewsModalComponent } from '../reviews-modal/reviews-modal.component';
+
+
+interface ProductoCalificado {
+  id_producto: number;
+  review: any;
+  promedio: number;
+}
 
 @Component({
   selector: 'app-productos-page',
@@ -19,7 +29,8 @@ import Swal from 'sweetalert2';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReviewsModalComponent
   ],
   templateUrl: './productos-page.component.html',
   styleUrl: './productos-page.component.css'
@@ -27,6 +38,12 @@ import Swal from 'sweetalert2';
 export class ProductosPageComponent implements OnInit {
   productos: any[] = [];
   categorias: any[] = [];
+
+  productoReview!: ProductoCalificado;
+  id_producto: number = 0;
+
+  reviewForm: FormGroup;
+
   elaboraciones: any[] = [];
   selectedCategoria: string = '';
   selectedElaboracion: string = '';
@@ -36,12 +53,20 @@ http: any;
   constructor(
     private productosService: ProductosService, 
     private compradorService: CompradorService,
-    private carritoService: CarritoService
-  ) { }
+    private carritoService: CarritoService,
+    private authService: AuthService,
+    private fb: FormBuilder
+  ) {
+    this.reviewForm = this.fb.group({
+      rating: [null, [Validators.required, Validators.min(1), Validators.max(5)]],
+      description: ['', [Validators.required, Validators.minLength(10)]]
+    });
+  }
 
   ngOnInit(): void {
     this.cargarFiltros();
     this.cargarProductos();
+    
   }
 
   cargarFiltros(): void {
@@ -67,8 +92,14 @@ http: any;
     }
 
     this.productosService.getProductos(filtros).subscribe(
-      data => this.productos = data,
-      err => console.error('Error al cargar productos:', err)
+      {
+        next: (data) => {
+          this.productos = data;
+        },
+        error: (error) => {
+          console.error('Error al cargar productos:', error);
+        }
+      }
     );
   }
 
@@ -78,8 +109,7 @@ http: any;
 
   agregarAlCarrito(producto: Producto): void {
     const cantidad = this.cantidadSeleccionada[producto.id_producto] || 1;
-    // console.log('Agregando al carrito:', producto);
-    // console.log('Cantidad:', cantidad);
+
     this.carritoService.agregarProductoCarrito(producto.id_producto, cantidad).subscribe(
       {
         next: (response) => {
@@ -104,5 +134,58 @@ http: any;
     );
   }
 
+
+  mostrarReview(idProducto: number): void {
+    this.productosService.getProductReviews(idProducto).subscribe(
+      {
+        next: (data) => {
+          this.productoReview = {
+            id_producto: idProducto,
+            review: data.reviews[0] || 'Sin reseñas',
+            promedio: data.avgRating[0].avgRating || 0
+          };
+          console.log('Calificaciones:', this.productoReview);
+          console.log('Only revieews:', this.productoReview.review);
+        },
+        error: (error) => {
+          console.error('Error al cargar calificaciones:', error);
+        }
+      }
+    );
+
+  }
+
+  submitReview(): void {
+    if (!this.authService.isAuthenticated()) {
+      // this.errorMessage = 'Debes estar autenticado para dejar una reseña.';
+      Swal.fire('Error al enviar reseña', 'Debes estar autenticado para dejar una reseña.', 'error');
+      return;
+    }
+
+    if (this.reviewForm.valid) {
+      const reviewData = {
+        id_producto: this.id_producto,
+        rating: this.reviewForm.value.rating,
+        description: this.reviewForm.value.description
+      };
+
+      this.productosService.addReview(reviewData).subscribe({
+        next: () => {
+          Swal.fire('Reseña enviada', 'Gracias por tu reseña', 'success');
+          this.reviewForm.reset();
+          // this.activeModal.close();
+        },
+        error: (error) => {
+          Swal.fire('Error al enviar reseña', 'Hubo un error al enviar la reseña. Intenta nuevamente.', 'error');
+          console.error(error);
+          // this.errorMessage = 'Hubo un error al enviar la reseña. Intenta nuevamente.';
+        }
+      });
+    }
+  }
+
+  marcarIdProducto(idProducto: number): void {
+    this.id_producto = idProducto;
+  }
 
 }

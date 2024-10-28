@@ -51,6 +51,18 @@
           <p class="card-text"><strong>Tipo de Elaboración:</strong> {{ producto.elaboracion }}</p>
           <input type="number" [(ngModel)]="cantidadSeleccionada[producto.id_producto]" min="1" class="form-control mb-2" placeholder="Cantidad">
           <button class="btn btn-primary" (click)="agregarAlCarrito(producto)">Agregar al Carrito</button>
+          <button 
+          class="btn btn-secondary" 
+          (click)="mostrarReview(producto.id_producto)"
+          data-bs-toggle="modal" data-bs-target="#verReviewsModal"
+          >Ver Calificacion</button>
+
+          <button 
+          class="btn btn-success" 
+          data-bs-toggle="modal" data-bs-target="#addReviewModal"
+          (click)= "marcarIdProducto(producto.id_producto)"
+          >Dejar comentario</button>
+
           <!-- <p class="card-text" *ngIf="producto.promo_descripcion">
             <strong>Promoción:</strong> {{ producto.promo_descripcion }} - {{ producto.promo_descuento }}%
           </p> -->
@@ -62,4 +74,65 @@
 
 
     <app-footer></app-footer>
+</div>
+
+
+<app-reviews-modal
+class="modal fade"
+id="verReviewsModal" tabindex="-1"
+aria-labelledby="verReviewsModal"
+aria-hidden="true"
+[reviewsProducto]="productoReview"
+></app-reviews-modal>
+
+<!-- MODAL PARA DEJAR UN review -->
+ <div
+ class="modal fade"
+id="addReviewModal" tabindex="-1"
+aria-labelledby="addReviewModal"
+aria-hidden="true">
+
+
+<div class="modal-dialog">
+  <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="reviewProducto">Reseñas de Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+                  
+              
+                  <div class="mb-3">
+                    <label for="rating" class="form-label">Calificación (1 a 5)</label>
+                    <input type="number" formControlName="rating" class="form-control" id="rating" min="1" max="5">
+                    <div *ngIf="reviewForm.get('rating')?.touched && reviewForm.get('rating')?.invalid" class="text-danger">
+                      La calificación es requerida y debe ser un valor entre 1 y 5.
+                    </div>
+                  </div>
+              
+                  <div class="mb-3">
+                    <label for="description" class="form-label">Descripción</label>
+                    <textarea formControlName="description" class="form-control" id="description" rows="3"></textarea>
+                    <div *ngIf="reviewForm.get('description')?.touched && reviewForm.get('description')?.invalid" class="text-danger">
+                      La descripción es requerida y debe tener al menos 10 caracteres.
+                    </div>
+                  </div>
+              
+                  <button type="submit" class="btn btn-primary" [disabled]="reviewForm.invalid">Enviar Reseña</button>
+                </form>
+         
+              </div>
+              <div class="modal-footer">
+            </div>
+            </div>
+      
+
+    </div>
+  
+</div>
+
+
+
 </div>

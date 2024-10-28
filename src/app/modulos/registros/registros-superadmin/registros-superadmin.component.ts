@@ -126,6 +126,7 @@ export class RegistrosSuperadminComponent implements OnInit {
     this.hideButtons = false;
     this.formularioActual = null;
     this.opciones = false;
+    console.log('showButtons');
   }
 
   showOpciones(){

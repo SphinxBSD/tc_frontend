@@ -68,6 +68,11 @@ export class UserService {
     return this.http.put(`${this.apiUrl}/users/cambiar-estado-pedido`, { id_pedido, estado: 'cancelado' });
   }
 
+  aceptarEntrega(id_pedido: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/cambiar-estado-pedido`, { id_pedido, estado: 'encurso' });
+  }
+
+
   asignarPedido(id_pedido:number): Observable<any> {
     return this.http.put(`${this.apiUrl}/users/cambiar-estado-pedido`, { id_pedido, estado: 'asignado' });
   }

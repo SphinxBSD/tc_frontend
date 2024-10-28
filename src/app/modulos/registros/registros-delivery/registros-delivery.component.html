@@ -54,6 +54,7 @@
             </span>
           </td>
           <td>
+            <button *ngIf="pedido.estado === 'asignado'" (click)="aceptarEntrega(pedido.id_pedido)" class="btn btn-sm btn-success">Aceptar Entrega</button>
             <!-- <button *ngIf="pedido.estado === 'encurso'" (click)="confirmarEntrega(pedido.id_pedido)" class="btn btn-sm btn-success">Confirmar Entrega</button>
             <button *ngIf="pedido.estado === 'porasignar' || pedido.estado=== 'asignado'" (click)="cancelarPedido(pedido.id_pedido)" class="btn btn-sm btn-danger">Cancelar</button> -->
           </td>

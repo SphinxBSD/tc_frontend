@@ -43,4 +43,12 @@ export class ProductosService {
   getElaboraciones(): Observable<any> {
     return this.http.get(`${this.apiUrl}/productos/elaboraciones`);
   }
+
+  addReview(reviewData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/productos/addReview`, reviewData);
+  }
+
+  getProductReviews(productId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/productos/reviews/${productId}`);
+  }
 }

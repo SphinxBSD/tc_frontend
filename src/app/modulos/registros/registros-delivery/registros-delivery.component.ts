@@ -53,4 +53,14 @@ export class RegistrosDeliveryComponent implements OnInit{
     this.formularioActual = null;
   }
 
+  aceptarEntrega(id_pedido: number): void {
+    this.userService.aceptarEntrega(id_pedido).subscribe(() => {
+      this.pedidos = this.pedidos.map(pedido => 
+        pedido.id_pedido === id_pedido ? { ...pedido, estado: 'encurso' } : pedido
+      );
+      Swal.fire('Pedido Aceptado', 'El pedido esta en curso', 'success');
+      this.showButtons();
+    });
+  }
+
 }

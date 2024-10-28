@@ -1,0 +1,43 @@
+<div class="modal-dialog">
+    <div class="modal-dialog">
+        @if (reviewsProducto) {
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="reviewProducto">Reseñas de Producto</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <h3>Calificacion Promedio</h3>
+      
+                  <h4>{{reviewsProducto.promedio}}</h4>
+                  
+              <div class="table-responsive reviews-table-container">
+                <table class="table table-striped ">
+                  <thead>
+                    <tr>
+                      <th>Id Usuario</th>
+                      <th>Promedio</th>
+                      <th>Comentario</th>
+                      <th>Fecha</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let review of reviewsProducto.review">
+                          <td>{{ review.id_usuario }}</td>
+                          <td>{{ review.rating }}</td>
+                          <td>{{ review.description }}</td>
+                          <td>{{ review.review_date }}</td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
+                </div>
+                <div class="modal-footer">
+              </div>
+              </div>
+        }
+
+      </div>
+    
+</div>
+

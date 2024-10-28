@@ -47,6 +47,7 @@ export class AsignarDeliveryModalComponent implements OnInit{
         next: (data) => {
           console.log('Pedido asignado a delivery');
           Swal.fire('Pedido asignado a delivery', '', 'success');
+          this.activarFuncionPadre();
         },
         error: (error) => {
           console.error('Error al asignar pedido a delivery', error);
