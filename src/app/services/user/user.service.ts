@@ -56,11 +56,28 @@ export class UserService {
     return this.http.get(`${this.apiUrl}/users/pedidos`);
   }
 
+  getPedidosDelivery(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/users/pedidos/delivery`);
+  }
+
   confirmarEntrega(id_pedido: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/users/cambiar-estado-pedido`, { id_pedido, estado: 'entregado' });
   }
   
   cancelarPedido(id_pedido: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/users/cambiar-estado-pedido`, { id_pedido, estado: 'cancelado' });
+  }
+
+  asignarPedido(id_pedido:number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/cambiar-estado-pedido`, { id_pedido, estado: 'asignado' });
+  }
+
+  getAllPedidos(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/users/all-pedidos`);
+  }
+
+  // Asignar delivery al pedido
+  asignarDelivery(id_pedido: number, id_delivery: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/asignar-delivery`, { id_pedido, id_delivery });
   }
 }

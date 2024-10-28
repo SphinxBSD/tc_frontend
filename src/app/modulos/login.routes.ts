@@ -11,6 +11,7 @@ import { AboutComponent } from "./aboutus/about/about.component";
 import { UsuariosCompradorComponent } from "./usuarios/usuarios-comprador/usuarios-comprador.component";
 import { ComunidadesComponent } from "./comunidades/comunidades/comunidades.component";
 import { UsuariosSuperadminComponent } from "./usuarios/usuarios-superadmin/usuarios-superadmin.component";
+import { UsuariosDeliveryComponent } from "./usuarios/usuarios-delivery/usuarios-delivery.component";
 
 export const routes: Routes = [
     {
@@ -62,6 +63,10 @@ export const routes: Routes = [
     {
         path: 'superadmin',
         component: UsuariosSuperadminComponent,
+    },
+    {
+        path: 'delivery',
+        component: UsuariosDeliveryComponent,
     },
     {
         path: '**',

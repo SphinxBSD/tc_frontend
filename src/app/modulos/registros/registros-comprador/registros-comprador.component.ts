@@ -18,7 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './registros-comprador.component.html',
   styleUrl: './registros-comprador.component.css'
 })
-export class RegistrosCompradorComponent {
+export class RegistrosCompradorComponent implements OnInit{
   productosCarrito: any[] = [];
   formularioActual: string | null = null;
 

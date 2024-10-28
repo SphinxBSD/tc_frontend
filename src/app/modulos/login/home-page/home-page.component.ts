@@ -56,7 +56,10 @@ export class HomePageComponent implements OnInit{
       this.router.navigate(['/auth/artesano']);
     } else if (this.usuarioRol === 'Administrador') {
       this.router.navigate(['/auth/superadmin']);
-    } else{
+    } else if (this.usuarioRol === 'Delivery') {
+      this.router.navigate(['/auth/delivery']);
+    }
+     else{
       this.router.navigate(['/auth/home']);
     }
   }

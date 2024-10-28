@@ -1,0 +1,46 @@
+<div class="modal-dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="solicitudComunidadLabel">Asignar Pedido a delivery</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h3>Listado de Deliverys contratados</h3>
+            <p *ngIf="pedido">{{'Id del pedido: ' + pedido.id_pedido}}</p>
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Estado</th>
+                <th>Fecha inicio</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let delivery of deliveries">
+                <td>{{ delivery.username }}</td>
+                <td>{{ delivery.estado }}</td>
+                <td>
+                  {{ delivery.fecha_inicio }}
+                </td>
+                <td>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="asignarDelivery(delivery.id_delivery)">Asignar</button>
+                </td>
+                
+              </tr>
+            </tbody>
+          </table>
+        </div>
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelarSolicitud()">Cancelar</button> -->
+            <!-- <button type="button" class="btn btn-primary" data-bs-dismiss="modal" >Enviar Solicitud</button> -->
+        </div>
+        </div>
+      </div>
+    
+</div>
+

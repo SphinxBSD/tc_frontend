@@ -4,13 +4,16 @@ import { ReactiveFormsModule, FormsModule, FormGroup, Validators, FormBuilder } 
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user/user.service';
 import Swal from 'sweetalert2';
+import { AsignarDeliveryModalComponent } from './asignar-delivery-modal/asignar-delivery-modal.component';
 
 @Component({
   selector: 'app-registros-superadmin',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    AsignarDeliveryModalComponent
   ],
   templateUrl: './registros-superadmin.component.html',
   styleUrl: './registros-superadmin.component.css'
@@ -33,10 +36,14 @@ export class RegistrosSuperadminComponent implements OnInit {
 
   selectedUserId: number | null = null;
 
+  pedidoSeleccionado: any | null = null;
+
+  pedidos: any[] = [];
+
   constructor(
     private router: Router, 
     private userService: UserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     
   }
@@ -97,6 +104,18 @@ export class RegistrosSuperadminComponent implements OnInit {
 
     if (tipo === 'listarD') {
       this.loadDeliveries()
+    }
+
+    if (tipo === 'pedidos'){
+      this.userService.getAllPedidos().subscribe({
+        next: (data) => {
+          this.pedidos = data;
+        },
+        error: (error) => {
+          console.error('Error al cargar los pedidos', error);
+        }
+      }
+      );
     }
     this.formularioActual = tipo;
     this.hideButtons = true;
@@ -180,5 +199,19 @@ export class RegistrosSuperadminComponent implements OnInit {
 
   triggerFileInput(): void {
     this.fileInput.nativeElement.click();
+  }
+
+  // marcarAsignado(id_pedido: number): void {
+  //   this.userService.asignarPedido(id_pedido).subscribe(() => {
+  //     this.pedidos = this.pedidos.map(pedido => 
+  //       pedido.id_pedido === id_pedido ? { ...pedido, estado: 'asignado' } : pedido
+  //     );
+  //   });
+  // }
+
+  openAsignarDeliveryModal(pedido: any): void {
+    this.pedidoSeleccionado = pedido;
+    // const modalRef = this.modalService.open(AsignarDeliveryModalComponent);
+    // modalRef.componentInstance.id_pedido = id_pedido;
   }
 }

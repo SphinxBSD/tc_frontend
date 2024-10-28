@@ -1,0 +1,64 @@
+
+<div class="container">
+    <div class="row justify-content-center">
+        @if(!this.hideButtons){
+            <div class="col-md-10">
+
+              <h2 class="label">Seguimiento pedidos</h2>
+                <!-- Imagen para seguimiento de pedidos -->
+                <div class="my-3">
+                  <a (click)="mostrarFormulario('pedidos')">
+                    <img
+                      src="assets/images/seguimiento.jpg"
+                      alt="Registro de Artesano"
+                      class="img-fluid img-link"
+                    />
+                  </a>
+                </div>
+                
+              </div>
+        }
+    </div>
+</div>
+
+<!-- LISTADO DE SEGUIMIENTO DE PEDIDOS -->
+<div *ngIf="formularioActual === 'pedidos'" class="container mt-5">
+  <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
+    
+  <div class="container">
+    <h2 class="my-4">Seguimiento de Pedidos</h2>
+    <table class="table table-striped" style="background-color: rgb(221, 187, 113);">
+      <thead class="thead-dark">
+        <tr>
+          <th>Producto</th>
+          <th>Precion unit.</th>
+          <th>Cantidad</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pedido of pedidos">
+          <td>{{ pedido.nombre_producto }}</td>
+          <td>{{ pedido.precio_unitario}}</td>
+          <td>{{ pedido.cantidad }}</td>
+          <td>
+            <span 
+              [ngClass]="{
+                'badge badge-warning': pedido.estado === 'encurso',
+                'badge badge-success': pedido.estado === 'entregado',
+                'badge badge-primary': pedido.estado === 'asignado',
+                'badge badge-secondary': pedido.estado === 'porasignar'
+              }">
+              {{ pedido.estado }}
+            </span>
+          </td>
+          <td>
+            <!-- <button *ngIf="pedido.estado === 'encurso'" (click)="confirmarEntrega(pedido.id_pedido)" class="btn btn-sm btn-success">Confirmar Entrega</button>
+            <button *ngIf="pedido.estado === 'porasignar' || pedido.estado=== 'asignado'" (click)="cancelarPedido(pedido.id_pedido)" class="btn btn-sm btn-danger">Cancelar</button> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

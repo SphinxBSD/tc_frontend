@@ -28,7 +28,7 @@
                 <!-- Imagen para administrar los pedidos -->
                 <h2 class="label">Administrar pedidos</h2>
                 <div class="my-3">
-                  <a (click)="showOpciones()">
+                  <a (click)="mostrarFormulario('pedidos')">
                     <img
                       src="assets/images/pedidosadm.png"
                       alt="Registro de Comunidad"
@@ -159,3 +159,62 @@
      </div>
   </div>
   
+
+
+<!-- LISTADO DE SEGUIMIENTO DE PEDIDOS -->
+<div *ngIf="formularioActual === 'pedidos'" class="container mt-5">
+  <button type="button" class="btn btn-warning mt-3" (click)="showButtons()">Volver</button>
+    
+  <div class="container">
+    <h2 class="my-4">Seguimiento de Pedidos</h2>
+    <table class="table table-striped" style="background-color: rgb(221, 187, 113);">
+      <thead class="thead-dark">
+        <tr>
+          <th>Producto</th>
+          <th>Precion unit.</th>
+          <th>Cantidad</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pedido of pedidos">
+          <td>{{ pedido.nombre_producto }}</td>
+          <td>{{ pedido.precio_unitario}}</td>
+          <td>{{ pedido.cantidad }}</td>
+          <td>
+            <span 
+              [ngClass]="{
+                'badge badge-warning': pedido.estado === 'encurso',
+                'badge badge-success': pedido.estado === 'entregado',
+                'badge badge-primary': pedido.estado === 'asignado',
+                'badge badge-secondary': pedido.estado === 'porasignar'
+              }">
+              {{ pedido.estado }}
+            </span>
+          </td>
+          <td>
+            <button 
+            *ngIf="pedido.estado === 'porasignar'" 
+            (click)="openAsignarDeliveryModal(pedido)" 
+            data-bs-toggle="modal" data-bs-target="#asignarDeliveryModal"
+            class="btn btn-sm btn-success">Asignar delivery</button>
+            <!-- <button *ngIf="pedido.estado === 'porasignar' || pedido.estado=== 'asignado'" (click)="cancelarPedido(pedido.id_pedido)" class="btn btn-sm btn-danger">Cancelar</button> -->
+            
+            <!-- <button class="btn btn-primary btn-sm" (click)="openAsignarDeliveryModal(pedido.id_pedido)">Asignar Delivery</button> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- Modal para asignar delivery -->
+<app-asignar-delivery-modal class="modal fade"
+[pedido]="pedidoSeleccionado"
+id="asignarDeliveryModal" tabindex="-1"
+aria-labelledby="asignarDeliveryModal"
+aria-hidden="true"
+(activar)="showButtons()"
+></app-asignar-delivery-modal>
