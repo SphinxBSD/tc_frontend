@@ -47,6 +47,7 @@ export const routes: Routes = [
     {
         path: 'comprador',
         component: UsuariosCompradorComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'productos',
@@ -63,10 +64,12 @@ export const routes: Routes = [
     {
         path: 'superadmin',
         component: UsuariosSuperadminComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'delivery',
         component: UsuariosDeliveryComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: '**',

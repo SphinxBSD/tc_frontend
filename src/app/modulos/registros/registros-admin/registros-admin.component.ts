@@ -117,19 +117,19 @@ export class RegistrosAdminComponent {
           // Define un observer para manejar los resultados de la suscripción
     const comunidadObserver = {
       next: (response: any) => {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Comunidad registrada con éxito",
-          showConfirmButton: false,
-          timer: 2000
-        });
-        // console.log('Comunidad registrada exitosamente', response);
-        this.comunidadForm.reset();
-        this.selectedFile = null;
-        this.selectedFileName = '';
-        this.isUpload = false;
-        // Aquí puedes añadir lógica adicional, como redirigir o mostrar un mensaje de éxito
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Comunidad registrada con éxito",
+              showConfirmButton: false,
+              timer: 2000
+            });
+            // console.log('Comunidad registrada exitosamente', response);
+            this.comunidadForm.reset();
+            this.selectedFile = null;
+            this.selectedFileName = '';
+            this.isUpload = false;
+            this.showButtons();
       },
       error: (err: any) => {
         Swal.fire({
@@ -147,8 +147,21 @@ export class RegistrosAdminComponent {
       }
     };
 
-    // Suscríbete al servicio utilizando el observer
-    this.comunidadService.registrarComunidad(formData).subscribe(comunidadObserver);
+    Swal.fire({
+      title: "¿Desea registrar una nueva comunidad?",
+      text: "Nombre de la comunidad: " + this.comunidadForm.get('nombre')?.value,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Suscríbete al servicio utilizando el observer
+        this.comunidadService.registrarComunidad(formData).subscribe(comunidadObserver);
+      }
+    });
     }
 
 

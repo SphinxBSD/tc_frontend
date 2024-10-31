@@ -9,7 +9,9 @@ import { CompradorService } from '../../../services/comprador/comprador.service'
 import { CarritoService } from '../../../services/carrito/carrito.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Producto } from '../../../models/producto.model';
+import { UserService } from '../../../services/user/user.service';
 import Swal from 'sweetalert2';
+import { Usuario } from '../../../models/usuario.model';
 
 import { ReviewsModalComponent } from '../reviews-modal/reviews-modal.component';
 
@@ -39,6 +41,8 @@ export class ProductosPageComponent implements OnInit {
   productos: any[] = [];
   categorias: any[] = [];
 
+  usuarioRol: string = '';
+
   productoReview!: ProductoCalificado;
   id_producto: number = 0;
 
@@ -52,15 +56,16 @@ export class ProductosPageComponent implements OnInit {
 http: any;
   constructor(
     private productosService: ProductosService, 
-    private compradorService: CompradorService,
     private carritoService: CarritoService,
     private authService: AuthService,
+    private userService: UserService,
     private fb: FormBuilder
   ) {
     this.reviewForm = this.fb.group({
       rating: [null, [Validators.required, Validators.min(1), Validators.max(5)]],
       description: ['', [Validators.required, Validators.minLength(10)]]
     });
+    this.getUserProfile();
   }
 
   ngOnInit(): void {
@@ -188,4 +193,17 @@ http: any;
     this.id_producto = idProducto;
   }
 
+
+  getUserProfile(): void {
+    this.userService.getUserProfile().subscribe({
+      next: (data: Usuario) => {
+        this.usuarioRol = data.roles;
+        console.log('Rol de usuaurio:', this.usuarioRol);
+        // console.log('Perfil del usuario:', data);
+      },
+      error: (error) => {
+        console.error('Error al obtener el perfil del usuario', error);
+      }
+    });
+  }
 }

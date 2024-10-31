@@ -1,0 +1,17 @@
+/* Establece el alto máximo de la tabla dentro del modal */
+.reviews-table-container {
+    max-height: 400px; /* Ajusta el alto según sea necesario */
+    overflow-y: auto;  /* Permite desplazamiento vertical si excede el alto */
+    overflow-x: auto;  /* Permite desplazamiento horizontal si es necesario */
+  }
+  
+  /* Asegura que las celdas tengan espacio adecuado */
+  .reviews-table-container table {
+    width: 100%; /* Asegura que la tabla ocupe el ancho completo del contenedor */
+  }
+  
+  .reviews-table-container th, .reviews-table-container td {
+    white-space: nowrap; /* Evita que el texto en las celdas se desborde */
+    text-align: left;
+  }
+  
