@@ -5,5 +5,6 @@ export interface Producto {
     elaboracion: string,
     fotos: string[]
     nombre_producto: string,
-    precio: string
+    precio: string,
+    cantidad: number,
   }

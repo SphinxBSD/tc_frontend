@@ -172,6 +172,7 @@ export class RegistrosAdminComponent {
   showButtons(){
     this.hideButtons = false;
     this.formularioActual = null;
+    this.isUpload = false;
   }
 
   onFileSelected(event: any): void {

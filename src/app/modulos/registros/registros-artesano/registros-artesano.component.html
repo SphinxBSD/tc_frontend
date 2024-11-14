@@ -202,9 +202,9 @@
               <th>Nombre</th>
               <th>Descripción</th>
               <th>Precio</th>
+              <th>Cantidad</th>
               <th>Categoría</th>
               <th>Elaboración</th>
-              <!-- <th>Fotos</th> -->
               <th>Opciones</th>
             </tr>
           </thead>
@@ -214,6 +214,7 @@
               <td>{{ product.nombre_producto }}</td>
               <td>{{ product.descripcion }}</td>
               <td>{{ product.precio | currency }}</td>
+              <td>{{ product.cantidad }}</td>
               <td>{{ product.categoria }}</td>
               <td>{{ product.elaboracion }}</td>
               <!-- <td>

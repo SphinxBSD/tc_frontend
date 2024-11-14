@@ -34,3 +34,13 @@ table {
 .card {
   margin-bottom: 20px;
 }
+
+.map-container {
+  height: 400px;
+  
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+}

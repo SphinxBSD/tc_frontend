@@ -12,6 +12,7 @@ import { UsuariosCompradorComponent } from "./usuarios/usuarios-comprador/usuari
 import { ComunidadesComponent } from "./comunidades/comunidades/comunidades.component";
 import { UsuariosSuperadminComponent } from "./usuarios/usuarios-superadmin/usuarios-superadmin.component";
 import { UsuariosDeliveryComponent } from "./usuarios/usuarios-delivery/usuarios-delivery.component";
+import { UserAnalyticsComponent } from "./dashboard/user-analytics/user-analytics.component";
 
 export const routes: Routes = [
     {
@@ -70,6 +71,10 @@ export const routes: Routes = [
         path: 'delivery',
         component: UsuariosDeliveryComponent,
         canActivate: [AuthGuard]
+    },
+    {
+        path: 'analytics',
+        component: UserAnalyticsComponent,
     },
     {
         path: '**',

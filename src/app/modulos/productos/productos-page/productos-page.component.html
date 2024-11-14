@@ -46,11 +46,12 @@
         <div class="card-body">
           <h5 class="card-title">{{ producto.nombre_producto }}</h5>
           <p class="card-text">{{ producto.descripcion }}</p>
+          <p class="card-text"><strong>Stock disponible: </strong>{{ producto.cantidad}}</p>
           <p class="card-text"><strong>Precio:</strong> Bs{{ producto.precio }}</p>
           <p class="card-text"><strong>Categoría:</strong> {{ producto.categoria }}</p>
           <p class="card-text"><strong>Tipo de Elaboración:</strong> {{ producto.elaboracion }}</p>
 
-          @if (usuarioRol === "comprador") {
+          @if (usuarioRol === "Comprador") {
             <input type="number" [(ngModel)]="cantidadSeleccionada[producto.id_producto]" min="1" class="form-control mb-2" placeholder="Cantidad">
             <button class="btn btn-primary" (click)="agregarAlCarrito(producto)">Agregar al Carrito</button>
           }

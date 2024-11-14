@@ -1,0 +1,52 @@
+<app-header usuarioRol="Administrador"></app-header>
+<div class="row">
+    <!-- Crecimiento Mensual de Usuarios -->
+    <div class="col-md-6 mb-4">
+      <div class="card">
+        <div class="card-header bg-primary text-white">Crecimiento Mensual de Usuarios</div>
+        <div class="card-body">
+          <apx-chart
+            [series]="lineChartOptions.series"
+            [chart]="lineChartOptions.chart"
+            [xaxis]="lineChartOptions.xaxis"
+            [title]="lineChartOptions.title"
+          ></apx-chart>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Distribución Geográfica -->
+    <div class="col-md-6 mb-4">
+      <div class="card">
+        <div class="card-header bg-info text-white">Distribución Geográfica de Usuarios</div>
+        <div class="card-body">
+          <apx-chart
+            [series]="pieChartOptions.series"
+            [chart]="pieChartOptions.chart"
+            [labels]="pieChartOptions.labels"
+            [title]="pieChartOptions.title"
+            [responsive]="pieChartOptions.responsive"
+          ></apx-chart>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Actividad Reciente de Usuarios -->
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header bg-warning text-white">Actividad Reciente de Usuarios</div>
+        <div class="card-body">
+          <apx-chart
+            [series]="barChartOptions.series"
+            [chart]="barChartOptions.chart"
+            [xaxis]="barChartOptions.xaxis"
+            [plotOptions]="barChartOptions.plotOptions"
+            [title]="barChartOptions.title"
+            [dataLabels]="barChartOptions.dataLabels"
+          ></apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-footer></app-footer>

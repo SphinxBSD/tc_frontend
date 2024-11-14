@@ -12,8 +12,9 @@ export class CompradorService {
   constructor(private http: HttpClient) { }
 
   // Confirmar compra
-  confirmarPedido(): Observable<any> {
-    return this.http.post(`${this.apiUrl}/comprador/comprar`, {});
+  confirmarPedido(latitud:number, longitud: number): Observable<any> {
+
+    return this.http.post(`${this.apiUrl}/comprador/comprar`, {latitud, longitud});
   }
   
   // Obtener historial de compras

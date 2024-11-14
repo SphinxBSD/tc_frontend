@@ -115,6 +115,16 @@ http: any;
   agregarAlCarrito(producto: Producto): void {
     const cantidad = this.cantidadSeleccionada[producto.id_producto] || 1;
 
+    if (cantidad > producto.cantidad){
+      Swal.fire({
+        title: 'Error al agregar producto al carrito',
+        text: 'La cantidad seleccionada supera el stock disponible',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+      return;
+    }
+
     this.carritoService.agregarProductoCarrito(producto.id_producto, cantidad).subscribe(
       {
         next: (response) => {

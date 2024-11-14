@@ -5,6 +5,8 @@ import { ProductosService } from '../../../services/productos/productos.service'
 import { UserService } from '../../../services/user/user.service';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -13,7 +15,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    GoogleMapsModule
   ],
   templateUrl: './registros-comprador.component.html',
   styleUrl: './registros-comprador.component.css'
@@ -29,6 +33,14 @@ export class RegistrosCompradorComponent implements OnInit{
 
   pedidos: any[] = [];
 
+  ubicacion = {
+    latitud: 2,
+    longitud: 3,
+    direccion: ''
+  };
+
+  
+
   constructor(
     private carritoService: CarritoService,
     private compradorService: CompradorService,
@@ -38,6 +50,62 @@ export class RegistrosCompradorComponent implements OnInit{
   ngOnInit(): void {
     
     this.listarProductosCarrito();
+  }
+
+  display: any;
+  center: google.maps.LatLngLiteral = { lat: -16.489689, lng: -68.2064792};
+  zoom = 10;
+  markers: google.maps.MarkerOptions[] = [];
+
+  moveMap(event: google.maps.MapMouseEvent) {
+    if (event.latLng) {
+      const coords = event.latLng.toJSON();
+      this.center = event.latLng.toJSON();
+
+      this.markers = [];
+      this.markers.push({
+        position: coords,
+        label: {
+          color: 'red',
+          text: 'Ubicación seleccionada',
+        },
+        title: 'Ubicación seleccionada',
+      }
+      );
+      if (this.markers[0]?.position?.lat) {
+        this.ubicacion.latitud = typeof this.markers[0].position.lat === 'function' ? this.markers[0].position.lat() : this.markers[0].position.lat;
+        this.ubicacion.longitud = typeof this.markers[0].position.lng === 'function' ? this.markers[0].position.lng() : this.markers[0].position.lng;
+      }
+      console.log('Ubicación:', this.ubicacion);
+    }
+
+    
+  }
+
+  move(event: google.maps.MapMouseEvent) {
+    if(event.latLng){
+      this.display = event.latLng.toJSON();
+    }
+  }
+
+  obtenerUbicacion() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.ubicacion.latitud = position.coords.latitude;
+          this.ubicacion.longitud = position.coords.longitude;
+          this.center = { lat: this.ubicacion.latitud, lng: this.ubicacion.longitud };
+
+          console.log('Ubicación obtenida:', this.ubicacion);
+        },
+        (error) => {
+          console.error('Error al obtener la ubicación:', error);
+          alert('No se pudo obtener la ubicación.');
+        }
+      );
+    } else {
+      alert('La geolocalización no es compatible con este navegador.');
+    }
   }
 
   cargarHistorial(): void {
@@ -93,7 +161,7 @@ export class RegistrosCompradorComponent implements OnInit{
               />`
     }).then((result) => {
       if (result.isConfirmed) {
-        this.compradorService.confirmarPedido().subscribe(
+        this.compradorService.confirmarPedido(this.ubicacion.latitud, this.ubicacion.longitud).subscribe(
           {
             next: (response) => {
               console.log('Compra realizada:', response);
@@ -159,11 +227,24 @@ export class RegistrosCompradorComponent implements OnInit{
 
 
   confirmarEntrega(id_pedido: number): void {
-    this.userService.confirmarEntrega(id_pedido).subscribe(() => {
-      this.pedidos = this.pedidos.map(pedido => 
-        pedido.id_pedido === id_pedido ? { ...pedido, estado: 'entregado' } : pedido
-      );
+    Swal.fire({
+      title: 'Confirmar entrega',
+      text: '¿Está seguro de que desea confirmar la entrega de este pedido?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (!result.isConfirmed) {
+        return;
+      }
+      this.userService.confirmarEntrega(id_pedido).subscribe(() => {
+        this.pedidos = this.pedidos.map(pedido => 
+          pedido.id_pedido === id_pedido ? { ...pedido, estado: 'entregado' } : pedido
+        );
+      });
     });
+    
   }
 
   cancelarPedido(id_pedido: number): void {
