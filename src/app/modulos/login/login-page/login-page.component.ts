@@ -42,10 +42,11 @@ export class LoginPageComponent {
     this.loading = true;
 
     // Ejecutar reCaptcha v3 antes de hacer login
-    this.recaptchaV3Service.execute('login').subscribe({
-      next: (tokenCaptcha: string) => {
+    // this.recaptchaV3Service.execute('login').subscribe({
+    //   next: (tokenCaptcha: string) => {
 
         // Llamar al servicio de autenticación
+        var tokenCaptcha = 'tokenCaptcha';
         this.authService.login(this.username, this.password, tokenCaptcha).subscribe({
           next: (response) => {
             this.loading = false;
@@ -60,12 +61,12 @@ export class LoginPageComponent {
             this.errorMessage = 'Error en el login: ' + (err.error?.message || 'Error desconocido');
           }
         });
-      },
-      error: () => {
-        this.loading = false;
-        this.errorMessage = 'Error en la verificación de captcha';
-      }
-    });
+    //   },
+    //   error: () => {
+    //     this.loading = false;
+    //     this.errorMessage = 'Error en la verificación de captcha';
+    //   }
+    // });
 
   }
 
