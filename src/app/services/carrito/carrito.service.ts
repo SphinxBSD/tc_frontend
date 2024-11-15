@@ -7,7 +7,8 @@ import { Producto } from '../../models/producto.model';
   providedIn: 'root'
 })
 export class CarritoService {
-  private apiUrl = 'http://localhost:8080/api'; 
+  // private apiUrl = 'http://localhost:8080/api'; 
+  private apiUrl = 'https://tcbackend-production-d459.up.railway.app/api';
 
   constructor(private http: HttpClient) { }
 

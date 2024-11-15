@@ -11,7 +11,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthService {
 
   private jwtHelper!: JwtHelperService;
-  private apiUrl = 'http://localhost:8080/api';  // Cambia la URL si es necesario
+  // private apiUrl = 'http://localhost:8080/api';  // Cambia la URL si es necesario
+  private apiUrl = 'https://tcbackend-production-d459.up.railway.app/api';
 
   constructor(private http: HttpClient,
           private recaptchaV3Service: ReCaptchaV3Service,

@@ -10,7 +10,8 @@ import { Comunario } from '../../models/comunario.model';
 })
 export class ComunidadService {
 
-  private apiUrl = 'http://localhost:8080/api' // Cambia por la URL de tu API
+  // private apiUrl = 'http://localhost:8080/api' // Cambia por la URL de tu API
+  private apiUrl = 'https://tcbackend-production-d459.up.railway.app/api';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 

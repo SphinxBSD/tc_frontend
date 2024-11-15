@@ -8,7 +8,8 @@ import { Usuario } from '../../models/usuario.model';
 })
 export class UserService {
 
-  private apiUrl = 'http://localhost:8080/api';  // Cambia por la URL de tu API
+  // private apiUrl = 'http://localhost:8080/api';  // Cambia por la URL de tu API
+  private apiUrl = 'https://tcbackend-production-d459.up.railway.app/api';
 
   constructor(private http: HttpClient) { }
 
